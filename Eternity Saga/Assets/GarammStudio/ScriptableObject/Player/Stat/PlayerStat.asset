@@ -37,4 +37,4 @@ MonoBehaviour:
   crit:
     BaseValue: 0
   speed:
-    BaseValue: 2
+    BaseValue: 3
