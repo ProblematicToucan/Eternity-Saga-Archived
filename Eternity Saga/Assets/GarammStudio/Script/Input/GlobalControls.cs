@@ -34,7 +34,7 @@ namespace GarammStudio.Script.Input
                     ""type"": ""Value"",
                     ""id"": ""621a2084-bfa1-445a-a59c-9cbb5ee68591"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
@@ -43,7 +43,7 @@ namespace GarammStudio.Script.Input
                     ""type"": ""PassThrough"",
                     ""id"": ""d1389996-09eb-46d6-a149-aa0ceb55ab91"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },

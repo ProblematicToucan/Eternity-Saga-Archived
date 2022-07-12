@@ -8,9 +8,9 @@ public class PlayerManager : Character
     public CharacterStat stat;
     [Expandable]
     public PlayerProp prop;
+    public StateController stateController;
     private PlayerAnimator playerAnimator;
     public PlayerAnimator PlayerAnimator { get { return playerAnimator; } }
-    private Locomotion locomotion;
 
 
     private void Awake()
@@ -18,22 +18,27 @@ public class PlayerManager : Character
         if (mainCamera == null)
             mainCamera = Camera.main.gameObject;
         playerAnimator = new PlayerAnimator(this);
-        locomotion = new Locomotion(this);
+        stateController = new StateController(this);
     }
     private void Start()
     {
-        locomotion.OnStart();
         playerAnimator.OnStart();
+        stateController.OnStart();
+    }
+
+    private void Update()
+    {
+        stateController.OnUpdate();
     }
 
     private void FixedUpdate()
     {
-        locomotion.OnFixedUpdate();
+        stateController.OnFixedUpdate();
     }
 
     private void OnDisable()
     {
-        locomotion.OnDisable();
+        stateController.OnDisable();
     }
 
     private void OnDrawGizmosSelected()
