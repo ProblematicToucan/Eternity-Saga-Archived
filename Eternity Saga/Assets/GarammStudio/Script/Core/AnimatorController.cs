@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class PlayerAnimator
+public class AnimatorController : MonoBehaviour
 {
-    private Animator animator;
-    public Animator Animator { get { return animator; } }
+    [SerializeField] private PlayerManager _manager;
+    private Animator _animator;
+    public Animator Animator { get { return _animator; } }
     private bool hasAnimator;
     public bool HasAnimator { get { return hasAnimator; } }
-    private PlayerManager _manager;
 
     // animation IDs
     private int _animIDSpeed;
@@ -19,20 +19,31 @@ public class PlayerAnimator
     public int AnimIDFreeFall { get { return _animIDFreeFall; } }
     private int _animIDMotionSpeed;
     public int AnimIDMotionSpeed { get { return _animIDMotionSpeed; } }
-
-    public void OnStart()
+    private int _animIDCombatState;
+    public int AnimIDCombatState { get { return _animIDCombatState; } }
+    // RM IDs
+    private int _animIDRM;
+    public int AnimIDRM { get { return _animIDRM; } }
+    void Start()
     {
+        _animator = GetComponent<Animator>();
+        _animIDRM = Animator.StringToHash("RM");
         _animIDSpeed = Animator.StringToHash("Speed");
         _animIDGrounded = Animator.StringToHash("Grounded");
         _animIDJump = Animator.StringToHash("Jump");
         _animIDFreeFall = Animator.StringToHash("FreeFall");
         _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
-        animator = _manager.GetComponentInChildren<Animator>();
-        hasAnimator = animator != null;
+        _animIDCombatState = Animator.StringToHash("Combat State");
+        hasAnimator = _animator != null;
     }
 
-    public PlayerAnimator(PlayerManager manager)
+    private void OnAnimatorMove()
     {
-        _manager = manager;
+        var stateInfoBase = _animator.GetCurrentAnimatorStateInfo(1);
+        if (stateInfoBase.tagHash == _animIDRM)
+        {
+            _manager.stateController.OnAnimatorMove();
+            _animator.ApplyBuiltinRootMotion();
+        }
     }
 }

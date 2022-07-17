@@ -16,8 +16,8 @@ public class GroundedCheck
             _locomotion.Manager.prop.GroundedRadius,
             _locomotion.Manager.prop.GroundLayers,
             QueryTriggerInteraction.Ignore);
-        if (_locomotion.Manager.PlayerAnimator.HasAnimator)
-            _locomotion.Manager.PlayerAnimator.Animator.SetBool(_locomotion.Manager.PlayerAnimator.AnimIDGrounded,
+        if (_locomotion.Manager.AnimatorController.HasAnimator)
+            _locomotion.Manager.AnimatorController.Animator.SetBool(_locomotion.Manager.AnimatorController.AnimIDGrounded,
                 _locomotion.Manager.prop.Grounded);
     }
 }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Locomotion
 {
     private PlayerManager _manager;
@@ -31,7 +33,12 @@ public class Locomotion
     {
         _groundedCheck.OnUpdate();
         _jumpAndGravity.OnUpdate();
-        _movement.OnUpdate();
+        _movement.OnFixedUpdate();
+    }
+
+    public void OnAnimatorMove()
+    {
+        _movement.OnAnimatorMove(_manager.AnimatorController.Animator);
     }
 
     public void OnDisable()

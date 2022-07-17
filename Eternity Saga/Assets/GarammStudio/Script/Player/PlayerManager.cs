@@ -9,20 +9,19 @@ public class PlayerManager : Character
     [Expandable]
     public PlayerProp prop;
     public StateController stateController;
-    private PlayerAnimator playerAnimator;
-    public PlayerAnimator PlayerAnimator { get { return playerAnimator; } }
+    private AnimatorController animatorController;
+    public AnimatorController AnimatorController { get { return animatorController; } }
 
 
     private void Awake()
     {
         if (mainCamera == null)
             mainCamera = Camera.main.gameObject;
-        playerAnimator = new PlayerAnimator(this);
+        animatorController = GetComponentInChildren<AnimatorController>();
         stateController = new StateController(this);
     }
     private void Start()
     {
-        playerAnimator.OnStart();
         stateController.OnStart();
     }
 

@@ -48,7 +48,7 @@ public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, Gl
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed) jumpEvent.Invoke();
+        if (context.phase == InputActionPhase.Started) jumpEvent.Invoke();
         if (context.phase == InputActionPhase.Canceled) jumpCanceledEvent.Invoke();
     }
 

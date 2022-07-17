@@ -34,10 +34,10 @@ public class JumpAndGravity
             _fallTimeoutDelta = _locomotion.Manager.prop.FallTimeout;
 
             // update animator if using character
-            if (_locomotion.Manager.PlayerAnimator.HasAnimator)
+            if (_locomotion.Manager.AnimatorController.HasAnimator)
             {
-                _locomotion.Manager.PlayerAnimator.Animator.SetBool(_locomotion.Manager.PlayerAnimator.AnimIDJump, false);
-                _locomotion.Manager.PlayerAnimator.Animator.SetBool(_locomotion.Manager.PlayerAnimator.AnimIDFreeFall, false);
+                _locomotion.Manager.AnimatorController.Animator.SetBool(_locomotion.Manager.AnimatorController.AnimIDJump, false);
+                _locomotion.Manager.AnimatorController.Animator.SetBool(_locomotion.Manager.AnimatorController.AnimIDFreeFall, false);
             }
 
             // stop our velocity dropping infinitely when grounded
@@ -53,9 +53,9 @@ public class JumpAndGravity
                 _locomotion.verticalVelocity = Mathf.Sqrt(_locomotion.Manager.prop.JumpHeight * -2f * _locomotion.Manager.prop.Gravity);
 
                 // update animator if using character
-                if (_locomotion.Manager.PlayerAnimator.HasAnimator)
+                if (_locomotion.Manager.AnimatorController.HasAnimator)
                 {
-                    _locomotion.Manager.PlayerAnimator.Animator.SetBool(_locomotion.Manager.PlayerAnimator.AnimIDJump, true);
+                    _locomotion.Manager.AnimatorController.Animator.SetBool(_locomotion.Manager.AnimatorController.AnimIDJump, true);
                 }
             }
 
@@ -78,9 +78,9 @@ public class JumpAndGravity
             else
             {
                 // update animator if using character
-                if (_locomotion.Manager.PlayerAnimator.HasAnimator)
+                if (_locomotion.Manager.AnimatorController.HasAnimator)
                 {
-                    _locomotion.Manager.PlayerAnimator.Animator.SetBool(_locomotion.Manager.PlayerAnimator.AnimIDFreeFall, true);
+                    _locomotion.Manager.AnimatorController.Animator.SetBool(_locomotion.Manager.AnimatorController.AnimIDFreeFall, true);
                 }
             }
 

@@ -23,7 +23,7 @@ public class Movement
         _movement = arg0;
     }
 
-    public void OnUpdate()
+    public void OnFixedUpdate()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
         var targetSpeed = isSprinting ? _locomotion.Manager.stat.speed.Value * 1.5f :
@@ -89,11 +89,16 @@ public class Movement
                          new Vector3(0.0f, _locomotion.verticalVelocity, 0.0f) * Time.deltaTime);
 
         // update animator if using character
-        if (_locomotion.Manager.PlayerAnimator.HasAnimator)
+        if (_locomotion.Manager.AnimatorController.HasAnimator)
         {
-            _locomotion.Manager.PlayerAnimator.Animator.SetFloat(_locomotion.Manager.PlayerAnimator.AnimIDSpeed, _locomotion.animationBlend);
-            _locomotion.Manager.PlayerAnimator.Animator.SetFloat(_locomotion.Manager.PlayerAnimator.AnimIDMotionSpeed, inputMagnitude);
+            _locomotion.Manager.AnimatorController.Animator.SetFloat(_locomotion.Manager.AnimatorController.AnimIDSpeed, _locomotion.animationBlend);
+            _locomotion.Manager.AnimatorController.Animator.SetFloat(_locomotion.Manager.AnimatorController.AnimIDMotionSpeed, inputMagnitude);
         }
+    }
+
+    public void OnAnimatorMove(Animator animator)
+    {
+        _controller.Move(animator.deltaPosition);
     }
 
     public void OnDisable()

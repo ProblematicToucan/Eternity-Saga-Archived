@@ -6,6 +6,11 @@ public class PlayerStateDead : BaseState
     {
     }
 
+    public override void OnAnimatorMove()
+    {
+        
+    }
+
     public override void OnEnter()
     {
         Debug.Log("PlayerStateDead.OnEnter");

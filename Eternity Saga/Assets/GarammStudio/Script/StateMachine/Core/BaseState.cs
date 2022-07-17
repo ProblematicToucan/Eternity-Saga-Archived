@@ -15,6 +15,7 @@ public abstract class BaseState
     public abstract void OnExit();
     public abstract void OnUpdate();
     public abstract void OnFixedUpdate();
+    public abstract void OnAnimatorMove();
     public async void TransitionToState(BaseState nexState)
     {
         if (_manager.stateController.currentState == nexState) return;

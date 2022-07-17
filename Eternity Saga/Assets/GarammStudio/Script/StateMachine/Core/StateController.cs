@@ -7,6 +7,7 @@ public class StateController
     [SerializeField]
     private StateFactory _factory;
     private PlayerManager _manager;
+    public bool IsCombat;
 
     public StateController(PlayerManager manager)
     {
@@ -21,11 +22,19 @@ public class StateController
     public void OnUpdate()
     {
         currentState.OnUpdate();
+        if (IsCombat) currentState.TransitionToState(_factory.Combat());
+        else currentState.TransitionToState(_factory.NonCombat());
     }
     public void OnFixedUpdate()
     {
         currentState.OnFixedUpdate();
     }
+
+    public void OnAnimatorMove()
+    {
+        currentState.OnAnimatorMove();
+    }
+
     public void OnDisable()
     {
         currentState.OnExit();

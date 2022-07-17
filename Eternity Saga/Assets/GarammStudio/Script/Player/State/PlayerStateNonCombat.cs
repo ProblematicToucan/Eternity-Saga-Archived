@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerStateNonCombat : BaseState
 {
     private Locomotion locomotion;
@@ -10,6 +8,7 @@ public class PlayerStateNonCombat : BaseState
 
     public override void OnEnter()
     {
+        _manager.AnimatorController.Animator.SetBool(_manager.AnimatorController.AnimIDCombatState, false);
         locomotion.OnStart();
     }
 
@@ -27,4 +26,8 @@ public class PlayerStateNonCombat : BaseState
         locomotion.OnFixedUpdate();
     }
 
+    public override void OnAnimatorMove()
+    {
+        locomotion.OnAnimatorMove();
+    }
 }
