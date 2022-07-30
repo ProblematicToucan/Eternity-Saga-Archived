@@ -43,7 +43,7 @@ namespace GarammStudio.Script.Input
                     ""type"": ""PassThrough"",
                     ""id"": ""d1389996-09eb-46d6-a149-aa0ceb55ab91"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -60,17 +60,6 @@ namespace GarammStudio.Script.Input
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""7c5a0f46-7192-421f-a2c6-dfa4a3d249c6"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CameraLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""e57c88c0-0fec-4208-bfda-196bbf9745c3"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
@@ -79,6 +68,39 @@ namespace GarammStudio.Script.Input
                     ""action"": ""CameraLook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""103d2728-b388-4b07-b7a1-ca5bac0c3994"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""d228ea6d-5fab-401e-b566-d80c1b06094b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""f23872b1-20e9-45c7-b6d6-4c76b7c48140"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""WASD"",

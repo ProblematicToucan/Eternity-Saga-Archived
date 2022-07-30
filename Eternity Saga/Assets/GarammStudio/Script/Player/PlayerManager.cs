@@ -3,30 +3,35 @@ using UnityEngine;
 public class PlayerManager : Character
 {
     public GameObject mainCamera;
-    public InputReader inputReader;
+    [SerializeField] private InputReader inputReader;
+    public InputReader InputReader { get { return inputReader; } }
     [Expandable]
     public CharacterStat stat;
     [Expandable]
     public PlayerProp prop;
-    public StateController stateController;
-    private AnimatorController animatorController;
-    public AnimatorController AnimatorController { get { return animatorController; } }
+    [Expandable]
+    public StateControllerSO stateController;
+    [field: SerializeField] public LocomotionSO Locomotion { get; private set; }
+    public AnimatorController AnimatorController { get; private set; }
+    [SerializeField] private GroundedCheckSO groundedCheck;
 
 
     private void Awake()
     {
         if (mainCamera == null)
             mainCamera = Camera.main.gameObject;
-        animatorController = GetComponentInChildren<AnimatorController>();
-        stateController = new StateController(this);
+        AnimatorController = GetComponentInChildren<AnimatorController>();
     }
     private void Start()
     {
-        stateController.OnStart();
+        groundedCheck.OnStart(this);
+        Locomotion.OnStart(this);
+        stateController.OnStart(this);
     }
 
     private void Update()
     {
+        groundedCheck.OnUpdate();
         stateController.OnUpdate();
     }
 
@@ -37,7 +42,7 @@ public class PlayerManager : Character
 
     private void OnDisable()
     {
-        stateController.OnDisable();
+        stateController.OnExit();
     }
 
     private void OnDrawGizmosSelected()

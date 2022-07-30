@@ -6,8 +6,6 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "new InputReader", menuName = "GarammStudio/Input/InputReader")]
 public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, GlobalControls.INonGameplayActions
 {
-    [SerializeField] private bool analogMovement;
-    public bool AnalogMovement { get { return analogMovement; } }
     public event UnityAction<Vector2> moveEvent = delegate { };
     public event UnityAction jumpEvent = delegate { };
     public event UnityAction jumpCanceledEvent = delegate { };

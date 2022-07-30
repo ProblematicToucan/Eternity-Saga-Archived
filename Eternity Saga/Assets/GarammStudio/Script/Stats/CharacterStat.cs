@@ -22,6 +22,8 @@ public class CharacterStat : ScriptableObject
     public Stat mdef;
     public Stat crit;
     public Stat speed;
+    public float sprintSpeed => (speed.Value * 2) > 8 ? 8 : (speed.Value * 2);
+    public float walkSpeed => speed.Value > 3 ? 3 : speed.Value;
 
     #endregion
 }
