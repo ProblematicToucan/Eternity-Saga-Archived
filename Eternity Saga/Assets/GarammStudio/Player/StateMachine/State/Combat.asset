@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744bf15781c21d140ac28b764f1e9cc1, type: 3}
   m_Name: Combat
   m_EditorClassIdentifier: 
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 0a5c1d2437248f0429a5ceaa7e94d683, type: 2}
+  - {fileID: 11400000, guid: c2558a2460410644aa092ad6ee20cf22, type: 2}
+  - {fileID: 11400000, guid: f17ffbe703ca7104780869340eb6b9e5, type: 2}
   transitions: []
   stateGizmoColor: {r: 1, g: 0, b: 0, a: 1}

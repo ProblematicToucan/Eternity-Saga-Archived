@@ -13,11 +13,12 @@ public class AnimatorController : MonoBehaviour
     public int AnimIDFreeFall { get; private set; }
     public int AnimIDMotionSpeed { get; private set; }
     public int AnimIDCombatState { get; private set; }
+    public int AnimIDIsInteracting { get; private set; }
     // RM IDs
     public int AnimIDRM { get; private set; }
     void Start()
     {
-        Anim = GetComponent<Animator>();
+        Anim = GetComponentInChildren<Animator>();
         AnimIDRM = Animator.StringToHash("RM");
         AnimIDSpeed = Animator.StringToHash("Speed");
         AnimIDGrounded = Animator.StringToHash("Grounded");
@@ -25,16 +26,27 @@ public class AnimatorController : MonoBehaviour
         AnimIDFreeFall = Animator.StringToHash("FreeFall");
         AnimIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         AnimIDCombatState = Animator.StringToHash("Combat State");
+        AnimIDIsInteracting = Animator.StringToHash("IsInteracting");
         HasAnimator = Anim != null;
+
+
     }
 
     private void OnAnimatorMove()
     {
-        var stateInfoBase = Anim.GetCurrentAnimatorStateInfo(1);
-        if (stateInfoBase.tagHash == AnimIDRM)
+        var stateInfoBase0 = Anim.GetCurrentAnimatorStateInfo(0);
+        var stateInfoBase1 = Anim.GetCurrentAnimatorStateInfo(1);
+        if (stateInfoBase1.tagHash == AnimIDRM || stateInfoBase0.tagHash == AnimIDRM)
         {
-            _manager.stateController.OnAnimatorMove();
+            var movement = new Vector3(Anim.deltaPosition.x, -0.2f, Anim.deltaPosition.z);
+            _manager.Locomotion.Controller.Move(movement);
             Anim.ApplyBuiltinRootMotion();
         }
+    }
+
+    public void PlayTargetedAnimation(string animationName, float transitionDuration = 0.0f)
+    {
+        Anim.SetBool(AnimIDIsInteracting, true);
+        Anim.CrossFade(animationName, transitionDuration);
     }
 }

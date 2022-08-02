@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GarammStudio/StateMachine/Player/Action/Jump", fileName = "New JumpAction")]
@@ -19,6 +18,7 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
 
     private void OnJump()
     {
+        if (_manager.AnimatorController.Anim.GetBool(_manager.AnimatorController.AnimIDIsInteracting)) return;
         isJumping = !isJumping;
     }
 

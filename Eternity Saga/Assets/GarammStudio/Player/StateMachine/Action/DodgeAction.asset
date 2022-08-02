@@ -9,12 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ff92a6dae0609a42b469025c8b003b9, type: 3}
-  m_Name: PlayerLocomotion
+  m_Script: {fileID: 11500000, guid: 06f6f52d82479aa48bb21e4018b838b8, type: 3}
+  m_Name: DodgeAction
   m_EditorClassIdentifier: 
-  speed: 0
-  animationBlend: 0
-  targetRotation: 121.273766
-  rotationVelocity: -0.27561495
-  verticalVelocity: -2.3
-  terminalVelocity: 53

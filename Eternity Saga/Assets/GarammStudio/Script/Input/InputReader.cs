@@ -9,6 +9,7 @@ public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, Gl
     public event UnityAction<Vector2> moveEvent = delegate { };
     public event UnityAction jumpEvent = delegate { };
     public event UnityAction jumpCanceledEvent = delegate { };
+    public event UnityAction dodgeEvent = delegate { };
     private GlobalControls controls;
 
     private void OnEnable()
@@ -58,5 +59,10 @@ public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, Gl
     public void OnScreenPosition(InputAction.CallbackContext context)
     {
 
+    }
+
+    public void OnDodge(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started) dodgeEvent.Invoke();
     }
 }

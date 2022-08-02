@@ -29,6 +29,8 @@ public class MoveActionSO : ActionSO
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
         var targetSpeed = _movement.magnitude > .8f ? _manager.stat.sprintSpeed : _manager.stat.walkSpeed;
+        if (_manager.AnimatorController.Anim.GetBool(_manager.AnimatorController.AnimIDIsInteracting))
+            targetSpeed = 0;
 
         // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -88,8 +90,11 @@ public class MoveActionSO : ActionSO
         Vector3 targetDirection = Quaternion.Euler(0.0f, _manager.Locomotion.targetRotation, 0.0f) * Vector3.forward;
 
         // move the player
-        _manager.Locomotion.Controller.Move(targetDirection.normalized * (_manager.Locomotion.speed * Time.deltaTime) +
-                         new Vector3(0.0f, _manager.Locomotion.verticalVelocity, 0.0f) * Time.deltaTime);
+        if (!_manager.AnimatorController.Anim.GetBool(_manager.AnimatorController.AnimIDIsInteracting))
+        {
+            _manager.Locomotion.Controller.Move(targetDirection.normalized * (_manager.Locomotion.speed * Time.deltaTime) +
+                new Vector3(0.0f, _manager.Locomotion.verticalVelocity, 0.0f) * Time.deltaTime);
+        }
 
         // update animator if using character
         if (_manager.AnimatorController.HasAnimator)

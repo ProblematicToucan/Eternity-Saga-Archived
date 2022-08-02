@@ -55,6 +55,15 @@ namespace GarammStudio.Script.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0c4f565-ff22-40e4-ad54-38d4aecf28c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -178,6 +187,17 @@ namespace GarammStudio.Script.Input
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c0f6d4a-b435-4329-974d-b41fc7833de7"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -217,6 +237,7 @@ namespace GarammStudio.Script.Input
             m_Gameplay_CameraLook = m_Gameplay.FindAction("CameraLook", throwIfNotFound: true);
             m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
             m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+            m_Gameplay_Dodge = m_Gameplay.FindAction("Dodge", throwIfNotFound: true);
             // NonGameplay
             m_NonGameplay = asset.FindActionMap("NonGameplay", throwIfNotFound: true);
             m_NonGameplay_ScreenPosition = m_NonGameplay.FindAction("ScreenPosition", throwIfNotFound: true);
@@ -282,6 +303,7 @@ namespace GarammStudio.Script.Input
         private readonly InputAction m_Gameplay_CameraLook;
         private readonly InputAction m_Gameplay_Movement;
         private readonly InputAction m_Gameplay_Jump;
+        private readonly InputAction m_Gameplay_Dodge;
         public struct GameplayActions
         {
             private @GlobalControls m_Wrapper;
@@ -289,6 +311,7 @@ namespace GarammStudio.Script.Input
             public InputAction @CameraLook => m_Wrapper.m_Gameplay_CameraLook;
             public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
             public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+            public InputAction @Dodge => m_Wrapper.m_Gameplay_Dodge;
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -307,6 +330,9 @@ namespace GarammStudio.Script.Input
                     @Jump.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                     @Jump.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
                     @Jump.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnJump;
+                    @Dodge.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
+                    @Dodge.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
+                    @Dodge.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDodge;
                 }
                 m_Wrapper.m_GameplayActionsCallbackInterface = instance;
                 if (instance != null)
@@ -320,6 +346,9 @@ namespace GarammStudio.Script.Input
                     @Jump.started += instance.OnJump;
                     @Jump.performed += instance.OnJump;
                     @Jump.canceled += instance.OnJump;
+                    @Dodge.started += instance.OnDodge;
+                    @Dodge.performed += instance.OnDodge;
+                    @Dodge.canceled += instance.OnDodge;
                 }
             }
         }
@@ -362,6 +391,7 @@ namespace GarammStudio.Script.Input
             void OnCameraLook(InputAction.CallbackContext context);
             void OnMovement(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnDodge(InputAction.CallbackContext context);
         }
         public interface INonGameplayActions
         {

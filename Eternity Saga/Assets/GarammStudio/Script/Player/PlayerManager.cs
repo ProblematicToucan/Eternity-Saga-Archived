@@ -20,7 +20,7 @@ public class PlayerManager : Character
     {
         if (mainCamera == null)
             mainCamera = Camera.main.gameObject;
-        AnimatorController = GetComponentInChildren<AnimatorController>();
+        AnimatorController = GetComponent<AnimatorController>();
     }
     private void Start()
     {

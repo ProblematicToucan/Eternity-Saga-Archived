@@ -15,5 +15,6 @@ MonoBehaviour:
   actions:
   - {fileID: 11400000, guid: 0a5c1d2437248f0429a5ceaa7e94d683, type: 2}
   - {fileID: 11400000, guid: c2558a2460410644aa092ad6ee20cf22, type: 2}
+  - {fileID: 11400000, guid: f17ffbe703ca7104780869340eb6b9e5, type: 2}
   transitions: []
   stateGizmoColor: {r: 0, g: 1, b: 0, a: 1}

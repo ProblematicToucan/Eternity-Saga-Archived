@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new StateController", menuName = "GarammStudio/StateMachine/Player/StateController")]
@@ -19,11 +18,6 @@ public class StateControllerSO : ScriptableObject
     public void OnFixedUpdate()
     {
         currentState.OnFixedUpdateState();
-    }
-
-    public void OnAnimatorMove()
-    {
-
     }
 
     public void OnExit()
