@@ -13,28 +13,48 @@ MonoBehaviour:
   m_Name: PlayerStat
   m_EditorClassIdentifier: 
   strength:
-    BaseValue: 0
+    BaseValue: 1
+    value: 1
   intelligence:
     BaseValue: 0
+    value: 0
   vit:
     BaseValue: 0
+    value: 0
   men:
     BaseValue: 0
+    value: 0
   dexterity:
     BaseValue: 0
+    value: 0
+  atkParam: {fileID: 11400000, guid: 01d16af9241aadb418b0902df76210e9, type: 2}
   atk:
     BaseValue: 0
+    value: 0
+  matkParam: {fileID: 0}
   matk:
     BaseValue: 0
+    value: 0
+  healthParam: {fileID: 0}
   health:
     BaseValue: 0
+    value: 0
+  manaParam: {fileID: 0}
   mana:
     BaseValue: 0
+    value: 0
+  defParam: {fileID: 0}
   def:
     BaseValue: 0
+    value: 0
+  mdefParam: {fileID: 0}
   mdef:
     BaseValue: 0
+    value: 0
+  critParam: {fileID: 0}
   crit:
     BaseValue: 0
-  speed:
-    BaseValue: 2
+    value: 0
+  Speed:
+    BaseValue: 0
+    value: 0

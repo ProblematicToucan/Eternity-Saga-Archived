@@ -28,7 +28,7 @@ public class MoveActionSO : ActionSO
     private void Movement()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        var targetSpeed = _movement.magnitude > .8f ? _manager.stat.sprintSpeed : _manager.stat.walkSpeed;
+        var targetSpeed = _movement.magnitude > .8f ? _manager.stat.SprintSpeed : _manager.stat.WalkSpeed;
         if (_manager.AnimatorController.Anim.GetBool(_manager.AnimatorController.AnimIDIsInteracting))
             targetSpeed = 0;
 

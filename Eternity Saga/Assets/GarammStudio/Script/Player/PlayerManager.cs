@@ -19,7 +19,7 @@ public class PlayerManager : Character
     private void Awake()
     {
         if (mainCamera == null)
-            mainCamera = Camera.main.gameObject;
+            mainCamera = Camera.main!.gameObject;
         AnimatorController = GetComponent<AnimatorController>();
     }
     private void Start()
@@ -50,12 +50,10 @@ public class PlayerManager : Character
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        if (prop.Grounded) Gizmos.color = transparentGreen;
-        else Gizmos.color = transparentRed;
-
-        // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
+        Gizmos.color = prop.Grounded ? transparentGreen : transparentRed;
+        var position = transform.position;
         Gizmos.DrawSphere(
-            new Vector3(transform.position.x, transform.position.y - prop.GroundedOffset, transform.position.z),
+            new Vector3(position.x, position.y - prop.GroundedOffset, position.z),
             prop.GroundedRadius);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine;
 
 [Serializable]
 public class Stat
@@ -10,7 +11,7 @@ public class Stat
     protected bool isDirty = true;
     protected float lastBaseValue;
 
-    protected float value;
+    [SerializeField, ReadOnly] protected float value;
     public virtual float Value
     {
         get
