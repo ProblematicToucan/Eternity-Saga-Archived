@@ -31,27 +31,27 @@ MonoBehaviour:
   atk:
     BaseValue: 0
     value: 0
-  matkParam: {fileID: 0}
+  matkParam: {fileID: 11400000, guid: e63d1602f70b6d4408c895b25aac64d1, type: 2}
   matk:
     BaseValue: 0
     value: 0
-  healthParam: {fileID: 0}
+  healthParam: {fileID: 11400000, guid: 120b38c2affb6c344802a0487fc7d5f7, type: 2}
   health:
     BaseValue: 0
     value: 0
-  manaParam: {fileID: 0}
+  manaParam: {fileID: 11400000, guid: b60b7b6eba8428342aa18b5ee34e4de9, type: 2}
   mana:
     BaseValue: 0
     value: 0
-  defParam: {fileID: 0}
+  defParam: {fileID: 11400000, guid: 28064b3879b8d804ab8f1a95259a27d6, type: 2}
   def:
     BaseValue: 0
     value: 0
-  mdefParam: {fileID: 0}
+  mdefParam: {fileID: 11400000, guid: 4ab57ef309ec6e54eb354b3fdfaa7f52, type: 2}
   mdef:
     BaseValue: 0
     value: 0
-  critParam: {fileID: 0}
+  critParam: {fileID: 11400000, guid: 12742c14a5f572f4e93a6edcd09b18eb, type: 2}
   crit:
     BaseValue: 0
     value: 0

@@ -18,6 +18,9 @@ public class StatModifier
     public StatModifier(float value, StatModType type, object source) : this(value, type, (int)type, source) { }
 }
 
+/// <summary>
+/// Stats modifiers types.
+/// </summary>
 public enum StatModType
 {
     Flat = 100,

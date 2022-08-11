@@ -4,5 +4,5 @@ public class ItemSO : ScriptableObject
 {
     public string itemName;
     public Sprite itemIcon;
-    public string itemDescription;
+    [Multiline(5)] public string itemDescription;
 }
