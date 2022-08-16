@@ -56,5 +56,5 @@ MonoBehaviour:
     BaseValue: 0
     value: 0
   Speed:
-    BaseValue: 0
-    value: 0
+    BaseValue: 2
+    value: 2
