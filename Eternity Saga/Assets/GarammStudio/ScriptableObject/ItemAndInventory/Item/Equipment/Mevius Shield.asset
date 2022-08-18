@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df69dee184c46424ea847c333c28d48f, type: 3}
-  m_Name: Mevius Sword
+  m_Name: Mevius Shield
   m_EditorClassIdentifier: 
   itemID: 401
-  itemName: Mevius Sword
-  itemIcon: {fileID: 21300000, guid: 1b812b3ad5589044e9b09efbac6ee544, type: 3}
-  itemDescription: Sword from Avabel realm
+  itemType: 1
+  itemName: Mevius Shield
+  itemIcon: {fileID: 21300000, guid: 1dd8a68bf26a2b94b8066bac25436704, type: 3}
+  itemDescription: Shield from Avabel realm
   <equipType>k__BackingField: 0
   <strengthBonus>k__BackingField: 0
   <intelligenceBonus>k__BackingField: 0

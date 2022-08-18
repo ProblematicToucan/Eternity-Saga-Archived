@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "new InputReader", menuName = "GarammStudio/Input/InputReader")]
-public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, GlobalControls.INonGameplayActions
+public class InputReaderSO : ScriptableObject, GlobalControls.IGameplayActions, GlobalControls.INonGameplayActions
 {
     public event UnityAction<Vector2> moveEvent = delegate { };
     public event UnityAction jumpEvent = delegate { };

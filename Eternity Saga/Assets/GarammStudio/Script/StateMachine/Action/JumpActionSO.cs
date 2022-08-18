@@ -12,8 +12,8 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
         _manager.InputReader.jumpEvent += OnJump;
         _manager.InputReader.jumpCanceledEvent += OnJump;
         // reset our timeouts on start    
-        _jumpTimeoutDelta = _manager.prop.JumpTimeout;
-        _fallTimeoutDelta = _manager.prop.FallTimeout;
+        _jumpTimeoutDelta = _manager.Prop.JumpTimeout;
+        _fallTimeoutDelta = _manager.Prop.FallTimeout;
     }
 
     private void OnJump()
@@ -35,10 +35,10 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
 
     private void JumpAndGravity()
     {
-        if (_manager.prop.Grounded)
+        if (_manager.Prop.Grounded)
         {
             // reset the fall timeout timer
-            _fallTimeoutDelta = _manager.prop.FallTimeout;
+            _fallTimeoutDelta = _manager.Prop.FallTimeout;
 
             // update animator if using character
             if (_manager.AnimatorController.HasAnimator)
@@ -57,7 +57,7 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
             if (isJumping && _jumpTimeoutDelta <= 0.0f)
             {
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
-                _manager.Locomotion.verticalVelocity = Mathf.Sqrt(_manager.prop.JumpHeight * -2f * _manager.prop.Gravity);
+                _manager.Locomotion.verticalVelocity = Mathf.Sqrt(_manager.Prop.JumpHeight * -2f * _manager.Prop.Gravity);
 
                 // update animator if using character
                 if (_manager.AnimatorController.HasAnimator)
@@ -75,7 +75,7 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
         else
         {
             // reset the jump timeout timer
-            _jumpTimeoutDelta = _manager.prop.JumpTimeout;
+            _jumpTimeoutDelta = _manager.Prop.JumpTimeout;
 
             // fall timeout
             if (_fallTimeoutDelta >= 0.0f)
@@ -98,7 +98,7 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
         if (_manager.Locomotion.verticalVelocity < _manager.Locomotion.terminalVelocity)
         {
-            _manager.Locomotion.verticalVelocity += _manager.prop.Gravity * Time.deltaTime;
+            _manager.Locomotion.verticalVelocity += _manager.Prop.Gravity * Time.deltaTime;
         }
     }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new PlayerProp", menuName = "GarammStudio/Player/PlayerProp")]
-public class PlayerProp : ScriptableObject
+public class PlayerPropSO : ScriptableObject
 {
     [Header("Locomotion"), Tooltip("How fast the character turns to face movement direction"), Range(0.0f, 0.3f)]
     public float RotationSmoothTime = 0.12f;

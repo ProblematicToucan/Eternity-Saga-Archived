@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new CharacterStat", menuName = "GarammStudio/Character/CharacterStat")]
-public class CharacterStat : ScriptableObject
+public class CharacterStatSO : ScriptableObject
 {
     #region Base Stats
     [Header("Base Stats")]

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Equipment Item", menuName = "GarammStudio/Item/Equipment Item")]
+[CreateAssetMenu(fileName = "new Equipment Item", menuName = "GarammStudio/Items Inventory/Item/Equipment Item")]
 public class EquippableItemSO : ItemSO
 {
     [field: SerializeField] public EquippableItemType equipType { get; private set; }
@@ -24,7 +24,11 @@ public class EquippableItemSO : ItemSO
     [field: SerializeField] public float speedBonusPercent { get; private set; }
     #endregion
 
-    public void Equip(CharacterStat characterStat)
+    private void Awake()
+    {
+        itemType = ItemType.Equipment;
+    }
+    public void Equip(CharacterStatSO characterStat)
     {
         // FLat
         if (strengthBonus != 0)
@@ -57,7 +61,7 @@ public class EquippableItemSO : ItemSO
             characterStat.Speed.AddModifier(new StatModifier(speedBonusPercent, StatModType.PercentAdd, this));
     }
 
-    public void Unequip(CharacterStat characterStat)
+    public void Unequip(CharacterStatSO characterStat)
     {
         characterStat.strength.RemoveAllModifiersFromSource(this);
         characterStat.intelligence.RemoveAllModifiersFromSource(this);

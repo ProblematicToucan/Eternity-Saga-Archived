@@ -48,8 +48,8 @@ public class StateSO : ScriptableObject
         for (int i = 0; i < transitions.Length; i++)
         {
             var decision = transitions[i].decision.Decise(manager);
-            if (decision) manager.stateController.TransitionToState(transitions[i].trueState);
-            else manager.stateController.TransitionToState(transitions[i].falseState);
+            if (decision) manager.StateController.TransitionToState(transitions[i].trueState);
+            else manager.StateController.TransitionToState(transitions[i].falseState);
         }
     }
 }

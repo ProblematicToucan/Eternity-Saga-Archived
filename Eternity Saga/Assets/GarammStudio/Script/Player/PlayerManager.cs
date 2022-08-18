@@ -3,17 +3,14 @@ using UnityEngine;
 public class PlayerManager : Character
 {
     public GameObject mainCamera;
-    [SerializeField] private InputReader inputReader;
-    public InputReader InputReader { get { return inputReader; } }
-    [Expandable]
-    public CharacterStat stat;
-    [Expandable]
-    public PlayerProp prop;
-    [Expandable]
-    public StateControllerSO stateController;
+    [field: SerializeField] public InputReaderSO InputReader { get; private set; }
+    [field: SerializeField, Expandable] public CharacterStatSO Stat { get; private set; }
+    [field: SerializeField, Expandable] public PlayerPropSO Prop { get; private set; }
+    [field: SerializeField, Expandable] public StateControllerSO StateController { get; private set; }
     [field: SerializeField] public LocomotionSO Locomotion { get; private set; }
     public AnimatorController AnimatorController { get; private set; }
-    [SerializeField] private GroundedCheckSO groundedCheck;
+    [field: SerializeField] public GroundedCheckSO GroundedCheck { get; private set; }
+    [field: SerializeField, Expandable] public InventorySO Inventory { get; private set; }
 
 
     private void Awake()
@@ -21,28 +18,30 @@ public class PlayerManager : Character
         if (mainCamera == null)
             mainCamera = Camera.main!.gameObject;
         AnimatorController = GetComponent<AnimatorController>();
+        Inventory?.RegisterEvent();
     }
     private void Start()
     {
-        groundedCheck.OnStart(this);
+        GroundedCheck.OnStart(this);
         Locomotion.OnStart(this);
-        stateController.OnStart(this);
+        StateController.OnStart(this);
     }
 
     private void Update()
     {
-        groundedCheck.OnUpdate();
-        stateController.OnUpdate();
+        GroundedCheck.OnUpdate();
+        StateController.OnUpdate();
     }
 
     private void FixedUpdate()
     {
-        stateController.OnFixedUpdate();
+        StateController.OnFixedUpdate();
     }
 
     private void OnDisable()
     {
-        stateController.OnExit();
+        StateController.OnExit();
+        Inventory?.UnregisterEvent();
     }
 
     private void OnDrawGizmosSelected()
@@ -50,10 +49,10 @@ public class PlayerManager : Character
         Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
         Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
-        Gizmos.color = prop.Grounded ? transparentGreen : transparentRed;
+        Gizmos.color = Prop.Grounded ? transparentGreen : transparentRed;
         var position = transform.position;
         Gizmos.DrawSphere(
-            new Vector3(position.x, position.y - prop.GroundedOffset, position.z),
-            prop.GroundedRadius);
+            new Vector3(position.x, position.y - Prop.GroundedOffset, position.z),
+            Prop.GroundedRadius);
     }
 }

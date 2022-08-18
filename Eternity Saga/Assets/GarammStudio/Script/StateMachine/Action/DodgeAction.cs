@@ -26,7 +26,7 @@ public class DodgeAction : ActionSO
     private void Dodge()
     {
         if (_manager.AnimatorController.Anim.GetBool(_manager.AnimatorController.AnimIDIsInteracting)) return;
-        if (!_manager.prop.Grounded) return;
+        if (!_manager.Prop.Grounded) return;
         if (_manager.Locomotion.speed > 1) _manager.AnimatorController.PlayTargetedAnimation("Roll", 0.1f);
         else _manager.AnimatorController.PlayTargetedAnimation("Stepback", 0.05f);
     }

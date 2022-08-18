@@ -28,7 +28,7 @@ public class MoveActionSO : ActionSO
     private void Movement()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
-        var targetSpeed = _movement.magnitude > .8f ? _manager.stat.SprintSpeed : _manager.stat.WalkSpeed;
+        var targetSpeed = _movement.magnitude > .8f ? _manager.Stat.SprintSpeed : _manager.Stat.WalkSpeed;
         if (_manager.AnimatorController.Anim.GetBool(_manager.AnimatorController.AnimIDIsInteracting))
             targetSpeed = 0;
 
@@ -53,7 +53,7 @@ public class MoveActionSO : ActionSO
             // creates curved result rather than a linear one giving a more organic speed change
             // note T in Lerp is clamped, so we don't need to clamp our speed
             _manager.Locomotion.speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed /* * inputMagnitude */,
-                Time.deltaTime * _manager.prop.SpeedChangeRate);
+                Time.deltaTime * _manager.Prop.SpeedChangeRate);
 
             // round speed to 3 decimal places
             _manager.Locomotion.speed = Mathf.Round(_manager.Locomotion.speed * 1000f) / 1000f;
@@ -65,7 +65,7 @@ public class MoveActionSO : ActionSO
 
         _manager.Locomotion.animationBlend = Mathf.Lerp(_manager.Locomotion.animationBlend,
             targetSpeed,
-            Time.deltaTime * _manager.prop.SpeedChangeRate);
+            Time.deltaTime * _manager.Prop.SpeedChangeRate);
         if (_manager.Locomotion.animationBlend < 0.01f) _manager.Locomotion.animationBlend = 0f;
 
         // normalise input direction
@@ -80,7 +80,7 @@ public class MoveActionSO : ActionSO
             float rotation = Mathf.SmoothDampAngle(_manager.transform.eulerAngles.y,
                 _manager.Locomotion.targetRotation,
                 ref _manager.Locomotion.rotationVelocity,
-                _manager.prop.RotationSmoothTime);
+                _manager.Prop.RotationSmoothTime);
 
             // rotate to face input direction relative to camera position
             _manager.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);

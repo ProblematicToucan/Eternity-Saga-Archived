@@ -13,14 +13,14 @@ public class GroundedCheckSO : ScriptableObject
     public void OnUpdate()
     {
         var spherePosition = new Vector3(_manager.transform.position.x,
-            _manager.transform.position.y + _manager.prop.GroundedOffset,
+            _manager.transform.position.y + _manager.Prop.GroundedOffset,
             _manager.transform.position.z);
-        _manager.prop.Grounded = Physics.CheckSphere(spherePosition,
-            _manager.prop.GroundedRadius,
-            _manager.prop.GroundLayers,
+        _manager.Prop.Grounded = Physics.CheckSphere(spherePosition,
+            _manager.Prop.GroundedRadius,
+            _manager.Prop.GroundLayers,
             QueryTriggerInteraction.Ignore);
         if (_manager.AnimatorController.HasAnimator)
             _manager.AnimatorController.Anim.SetBool(_manager.AnimatorController.AnimIDGrounded,
-                _manager.prop.Grounded);
+                _manager.Prop.Grounded);
     }
 }
