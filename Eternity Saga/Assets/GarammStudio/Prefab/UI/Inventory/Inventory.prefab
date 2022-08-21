@@ -1852,12 +1852,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dae1650d7e797d4d889b9a60a30c7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
-  itemSlots: []
+  inventory: {fileID: 11400000, guid: 665be15a0bffed14b9c339c2e4884502, type: 2}
   itemSlotPrefab: {fileID: 4217931440481040741, guid: ea0c0a39f8f3de645ad3d6d9bfd3e7f5, type: 3}
-  inventoryPanel: {fileID: 4213422339218908296}
-  onEnableEvent: {fileID: 11400000, guid: b140e63ed2b89d444877a3b5c9b246bf, type: 2}
-  onDisableEvent: {fileID: 11400000, guid: 3bd9f9da32a3ed14696f715d3206eda2, type: 2}
+  inventoryPanel: {fileID: 4213422339218908297}
+  onEnableEvents:
+  - {fileID: 11400000, guid: b140e63ed2b89d444877a3b5c9b246bf, type: 2}
+  onDisableEvents:
+  - {fileID: 11400000, guid: 3bd9f9da32a3ed14696f715d3206eda2, type: 2}
 --- !u!1 &7112378986097584423
 GameObject:
   m_ObjectHideFlags: 0

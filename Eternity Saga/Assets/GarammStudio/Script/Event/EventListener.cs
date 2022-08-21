@@ -33,20 +33,20 @@ public class EventListener : MonoBehaviour
 [System.Serializable]
 public class Event
 {
-    public EventSO eventSO;
+    public EventSO eventChanel;
     public UnityEvent response;
     public void OnEnable()
     {
-        eventSO?.RegisterListener(this);
+        eventChanel?.RegisterListener(this);
     }
 
     public void OnDisable()
     {
-        eventSO?.UnregisterListener(this);
+        eventChanel?.UnregisterListener(this);
     }
 
     public void OnEventRaised()
     {
-        response?.Invoke();
+        response.Invoke();
     }
 }

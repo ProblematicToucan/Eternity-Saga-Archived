@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   events:
-  - eventSO: {fileID: 11400000, guid: b140e63ed2b89d444877a3b5c9b246bf, type: 2}
+  - eventChanel: {fileID: 11400000, guid: b140e63ed2b89d444877a3b5c9b246bf, type: 2}
     response:
       m_PersistentCalls:
         m_Calls:
@@ -491,7 +491,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventSO: {fileID: 11400000, guid: 3bd9f9da32a3ed14696f715d3206eda2, type: 2}
+  - eventChanel: {fileID: 11400000, guid: 3bd9f9da32a3ed14696f715d3206eda2, type: 2}
     response:
       m_PersistentCalls:
         m_Calls:

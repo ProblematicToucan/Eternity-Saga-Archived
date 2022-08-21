@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Refference class to the item slot UI.
+/// </summary>
 public class ItemSlotUI : MonoBehaviour
 {
     public ItemSO item;
@@ -9,17 +12,11 @@ public class ItemSlotUI : MonoBehaviour
     [field: SerializeField] public TextMeshProUGUI itemCount { get; private set; }
     [field: SerializeField] public TextMeshProUGUI itemName { get; private set; }
 
-    public void SetItem(ItemSO item)
+    public void UpdateDisplay(ItemSO _item, int _amount)
     {
-        this.item = item;
-        itemImage.sprite = item.itemIcon;
-        itemCount.text = 1.ToString();
-        itemName.text = item.name;
-    }
-
-    [ContextMenu("SetItem")]
-    private void Click()
-    {
-        SetItem(item);
+        item = _item;
+        itemImage.sprite = _item.itemIcon;
+        itemCount.text = _amount.ToString();
+        itemName.text = _item.name;
     }
 }

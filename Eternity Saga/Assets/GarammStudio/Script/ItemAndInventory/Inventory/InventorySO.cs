@@ -1,20 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "new Inventory", menuName = "GarammStudio/Items Inventory/Inventory")]
 public class InventorySO : ScriptableObject
 {
+    public event UnityAction OnInventoryChanged;
     [field: SerializeField] public int capacity { get; private set; } = 50;
-    public List<InventorySlot> container;
-    public bool IsFull() => container.Count >= capacity;
+    public List<InventorySlot> inventorySlots;
+    public bool IsFull() => inventorySlots.Count >= capacity;
 
     private void OnValidate()
     {
-        for (int i = 0; i < container.Count; i++)
+        for (int i = 0; i < inventorySlots.Count; i++)
         {
-            if (container[i].item != null)
+            if (inventorySlots[i].item != null)
             {
-                container[i].itemID = container[i].item.itemID;
+                inventorySlots[i].itemID = inventorySlots[i].item.itemID;
             }
         }
     }
@@ -22,19 +24,20 @@ public class InventorySO : ScriptableObject
     public void AddItem(ItemSO _item, int _amount)
     {
         var hasItem = false;
-        for (int i = 0; i < container.Count; i++)
+        for (int i = 0; i < inventorySlots.Count; i++)
         {
-            if (container[i].item == _item)
+            if (inventorySlots[i].item == _item)
             {
-                container[i].amount += _amount;
+                inventorySlots[i].amount += _amount;
                 hasItem = true;
                 break;
             }
         }
-        if (!hasItem)
+        if (!hasItem && !IsFull())
         {
-            container.Add(new InventorySlot(_item, _amount));
+            inventorySlots.Add(new InventorySlot(_item, _amount));
         }
+        OnInventoryChanged?.Invoke();
     }
 
     public void RegisterEvent()
@@ -45,7 +48,7 @@ public class InventorySO : ScriptableObject
     public void UnregisterEvent()
     {
         Item.OnTouch -= OnTouch;
-        container.Clear();
+        inventorySlots.Clear();
     }
 
     private void OnTouch(ItemSO obj, int amount)
@@ -54,6 +57,9 @@ public class InventorySO : ScriptableObject
     }
 }
 
+/// <summary>
+/// Contains itemID, itemSO and amount
+/// </summary>
 [System.Serializable]
 public class InventorySlot
 {

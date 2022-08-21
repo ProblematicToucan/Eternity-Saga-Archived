@@ -1,9 +1,9 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Item : MonoBehaviour
 {
-    public static Action<ItemSO, int> OnTouch;
+    public static event UnityAction<ItemSO, int> OnTouch;
     [SerializeField] private ItemSO item;
     [SerializeField] private int amount;
     private void OnTriggerEnter(Collider other)
