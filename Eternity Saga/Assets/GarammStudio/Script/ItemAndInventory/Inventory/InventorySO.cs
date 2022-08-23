@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,10 +7,14 @@ using UnityEngine.Events;
 public class InventorySO : ScriptableObject
 {
     public event UnityAction OnInventoryChanged;
+    [SerializeField] private ItemDatabaseSO itemDatabase;
     [field: SerializeField] public int capacity { get; private set; } = 50;
     public List<InventorySlot> inventorySlots;
+    private const string InventoryFileName = "Inventory";
+
     public bool IsFull() => inventorySlots.Count >= capacity;
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         for (int i = 0; i < inventorySlots.Count; i++)
@@ -20,13 +25,17 @@ public class InventorySO : ScriptableObject
             }
         }
     }
+#endif
 
     public void AddItem(ItemSO _item, int _amount)
     {
         var hasItem = false;
+        var itemIdOnDatabase = itemDatabase.GetIdReferenceByItemSO(_item);
+        var itemOnDatabase = itemDatabase.GetItemSOReferenceById(_item.itemID);
+        if (itemOnDatabase == null) return;
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            if (inventorySlots[i].item == _item)
+            if (inventorySlots[i].item.itemID == itemIdOnDatabase)
             {
                 inventorySlots[i].amount += _amount;
                 hasItem = true;
@@ -35,7 +44,7 @@ public class InventorySO : ScriptableObject
         }
         if (!hasItem && !IsFull())
         {
-            inventorySlots.Add(new InventorySlot(_item, _amount));
+            inventorySlots.Add(new InventorySlot(itemOnDatabase, _amount));
         }
         OnInventoryChanged?.Invoke();
     }
@@ -55,6 +64,32 @@ public class InventorySO : ScriptableObject
     {
         AddItem(obj, amount);
     }
+
+    [ContextMenu("Save")]
+    public void Save()
+    {
+        var saveDatas = new List<InventorySaveData>();
+        var baseSavePath = Application.persistentDataPath;
+        var saveFile = Path.Combine(baseSavePath, InventoryFileName);
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            saveDatas.Add(new InventorySaveData(inventorySlots[i].itemID, inventorySlots[i].amount));
+        }
+        FileReadWrite.WriteToBinaryFile(saveFile + ".dat", saveDatas);
+    }
+
+    [ContextMenu("Load")]
+    public void Load()
+    {
+        var baseSavePath = Application.persistentDataPath;
+        var saveFile = Path.Combine(baseSavePath, InventoryFileName);
+        var savedDatas = FileReadWrite.ReadFromBinaryFile<List<InventorySaveData>>(saveFile + ".dat");
+        inventorySlots.Clear();
+        for (int i = 0; i < savedDatas.Count; i++)
+        {
+            AddItem(itemDatabase.GetItemSOReferenceById(savedDatas[i].itemID), savedDatas[i].amount);
+        }
+    }
 }
 
 /// <summary>
@@ -72,20 +107,22 @@ public class InventorySlot
         item = null;
         amount = 0;
     }
-    public InventorySlot(ItemSO _item)
-    {
-        itemID = _item.itemID;
-        item = _item;
-        amount = 1;
-    }
     public InventorySlot(ItemSO _itemSO, int _amount)
     {
         itemID = _itemSO.itemID;
         item = _itemSO;
         amount = _amount;
     }
-    public void AddAmount(int _amount)
+}
+
+[System.Serializable]
+public class InventorySaveData
+{
+    public int itemID;
+    public int amount;
+    public InventorySaveData(int _itemId, int _amount)
     {
-        amount += _amount;
+        itemID = _itemId;
+        amount = _amount;
     }
 }

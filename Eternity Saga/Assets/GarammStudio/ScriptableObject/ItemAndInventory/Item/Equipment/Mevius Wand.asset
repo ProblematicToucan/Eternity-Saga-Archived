@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df69dee184c46424ea847c333c28d48f, type: 3}
+  m_Name: Mevius Wand
+  m_EditorClassIdentifier: 
+  itemID: -759130426
+  itemType: 1
+  itemName: Mevius Wand
+  itemIcon: {fileID: 21300000, guid: 9c4f8689a4ea2c04d9df4700e00fcd77, type: 3}
+  itemDescription: Wand from Avabel realm
+  MaximumStacks: 1
+  <equipType>k__BackingField: 0
+  <strengthBonus>k__BackingField: 0
+  <intelligenceBonus>k__BackingField: 0
+  <vitBonus>k__BackingField: 0
+  <menBonus>k__BackingField: 0
+  <dexterityBonus>k__BackingField: 0
+  <atkBonusPercent>k__BackingField: 0
+  <matkBonusPercent>k__BackingField: 0
+  <healthBonusPercent>k__BackingField: 0
+  <manaBonusPercent>k__BackingField: 0
+  <defBonusPercent>k__BackingField: 0
+  <mdefkBonusPercent>k__BackingField: 0
+  <critkBonusPercent>k__BackingField: 0
+  <speedBonusPercent>k__BackingField: 0

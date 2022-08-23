@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ca666b083d8774cb536941bc38801f, type: 3}
-  m_Name: Player Inventory
+  m_Script: {fileID: 11500000, guid: 0a046db8bd1e76547bf358ea5e109ef2, type: 3}
+  m_Name: Inventory Database
   m_EditorClassIdentifier: 
-  itemDatabase: {fileID: 11400000, guid: d63662f56025e2948b2288f007f349f6, type: 2}
-  <capacity>k__BackingField: 50
-  inventorySlots: []
+  items:
+  - {fileID: 11400000, guid: fc531cdbda3797d48840dd01da9c76d6, type: 2}
+  - {fileID: 11400000, guid: 0aec99a24cbc2c0418890e80856017d3, type: 2}

@@ -28,6 +28,7 @@ public class EquippableItemSO : ItemSO
     {
         itemType = ItemType.Equipment;
     }
+
     public void Equip(CharacterStatSO characterStat)
     {
         // FLat
