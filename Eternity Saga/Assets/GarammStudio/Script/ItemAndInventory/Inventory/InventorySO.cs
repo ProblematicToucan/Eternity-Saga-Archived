@@ -31,7 +31,7 @@ public class InventorySO : ScriptableObject
     {
         var hasItem = false;
         var itemIdOnDatabase = itemDatabase.GetIdReferenceByItemSO(_item);
-        var itemOnDatabase = itemDatabase.GetItemSOReferenceById(_item.itemID);
+        var itemOnDatabase = itemDatabase.GetItemSOReferenceById(itemIdOnDatabase);
         if (itemOnDatabase == null) return;
         for (int i = 0; i < inventorySlots.Count; i++)
         {
