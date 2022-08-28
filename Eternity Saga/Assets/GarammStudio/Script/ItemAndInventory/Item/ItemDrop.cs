@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Item : MonoBehaviour
+public class ItemDrop : MonoBehaviour
 {
     public static event UnityAction<ItemSO, int> OnTouch;
     [SerializeField] private ItemSO item;

@@ -10,7 +10,6 @@ public class InventorySO : ScriptableObject
     [SerializeField] private ItemDatabaseSO itemDatabase;
     [field: SerializeField] public int capacity { get; private set; } = 50;
     public List<InventorySlot> inventorySlots;
-    private const string InventoryFileName = "Inventory";
 
     public bool IsFull() => inventorySlots.Count >= capacity;
 
@@ -51,12 +50,12 @@ public class InventorySO : ScriptableObject
 
     public void RegisterEvent()
     {
-        Item.OnTouch += OnTouch;
+        ItemDrop.OnTouch += OnTouch;
     }
 
     public void UnregisterEvent()
     {
-        Item.OnTouch -= OnTouch;
+        ItemDrop.OnTouch -= OnTouch;
         inventorySlots.Clear();
     }
 
@@ -70,7 +69,7 @@ public class InventorySO : ScriptableObject
     {
         var saveDatas = new List<InventorySaveData>();
         var baseSavePath = Application.persistentDataPath;
-        var saveFile = Path.Combine(baseSavePath, InventoryFileName);
+        var saveFile = Path.Combine(baseSavePath, this.name);
         for (int i = 0; i < inventorySlots.Count; i++)
         {
             saveDatas.Add(new InventorySaveData(inventorySlots[i].itemID, inventorySlots[i].amount));
@@ -82,7 +81,7 @@ public class InventorySO : ScriptableObject
     public void Load()
     {
         var baseSavePath = Application.persistentDataPath;
-        var saveFile = Path.Combine(baseSavePath, InventoryFileName);
+        var saveFile = Path.Combine(baseSavePath, this.name);
         var savedDatas = FileReadWrite.ReadFromBinaryFile<List<InventorySaveData>>(saveFile + ".dat");
         inventorySlots.Clear();
         for (int i = 0; i < savedDatas.Count; i++)

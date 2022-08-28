@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55ca666b083d8774cb536941bc38801f, type: 3}
-  m_Name: Player Inventory
+  m_Name: Player Bag
   m_EditorClassIdentifier: 
   itemDatabase: {fileID: 11400000, guid: d63662f56025e2948b2288f007f349f6, type: 2}
   <capacity>k__BackingField: 50
