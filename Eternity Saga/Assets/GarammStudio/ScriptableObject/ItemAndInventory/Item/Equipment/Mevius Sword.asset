@@ -12,21 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69dee184c46424ea847c333c28d48f, type: 3}
   m_Name: Mevius Sword
   m_EditorClassIdentifier: 
-  itemID: 401
-  itemName: Mevius Sword
-  itemIcon: {fileID: 21300000, guid: 1b812b3ad5589044e9b09efbac6ee544, type: 3}
-  itemDescription: Sword from Avabel realm
+  ItemId: -1565546420
+  ItemType: 1
+  ItemName: Mevius Sword
+  ItemIcon: {fileID: 21300000, guid: 1b812b3ad5589044e9b09efbac6ee544, type: 3}
+  Buffs:
+  - Attribute: 0
+    Value: 0
+    Min: 5
+    Max: 15
+  ItemDescription: 
+  MaximumStacks: 1
   <equipType>k__BackingField: 0
-  <strengthBonus>k__BackingField: 0
-  <intelligenceBonus>k__BackingField: 0
-  <vitBonus>k__BackingField: 0
-  <menBonus>k__BackingField: 0
-  <dexterityBonus>k__BackingField: 0
-  <atkBonusPercent>k__BackingField: 0
-  <matkBonusPercent>k__BackingField: 0
-  <healthBonusPercent>k__BackingField: 0
-  <manaBonusPercent>k__BackingField: 0
-  <defBonusPercent>k__BackingField: 0
-  <mdefkBonusPercent>k__BackingField: 0
-  <critkBonusPercent>k__BackingField: 0
-  <speedBonusPercent>k__BackingField: 0

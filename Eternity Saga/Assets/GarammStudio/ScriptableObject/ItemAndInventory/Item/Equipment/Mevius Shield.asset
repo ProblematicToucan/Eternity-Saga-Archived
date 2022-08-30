@@ -12,22 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69dee184c46424ea847c333c28d48f, type: 3}
   m_Name: Mevius Shield
   m_EditorClassIdentifier: 
-  itemID: 402
-  itemType: 1
-  itemName: Mevius Shield
-  itemIcon: {fileID: 21300000, guid: 1dd8a68bf26a2b94b8066bac25436704, type: 3}
-  itemDescription: Shield from Avabel realm
+  ItemId: 1744244341
+  ItemType: 1
+  ItemName: Mevius Shield
+  ItemIcon: {fileID: 21300000, guid: 1dd8a68bf26a2b94b8066bac25436704, type: 3}
+  Buffs:
+  - Attribute: 2
+    Value: 0
+    Min: 5
+    Max: 10
+  - Attribute: 3
+    Value: 0
+    Min: 5
+    Max: 10
+  ItemDescription: 
+  MaximumStacks: 1
   <equipType>k__BackingField: 0
-  <strengthBonus>k__BackingField: 0
-  <intelligenceBonus>k__BackingField: 0
-  <vitBonus>k__BackingField: 0
-  <menBonus>k__BackingField: 0
-  <dexterityBonus>k__BackingField: 0
-  <atkBonusPercent>k__BackingField: 0
-  <matkBonusPercent>k__BackingField: 0
-  <healthBonusPercent>k__BackingField: 0
-  <manaBonusPercent>k__BackingField: 0
-  <defBonusPercent>k__BackingField: 0
-  <mdefkBonusPercent>k__BackingField: 0
-  <critkBonusPercent>k__BackingField: 0
-  <speedBonusPercent>k__BackingField: 0

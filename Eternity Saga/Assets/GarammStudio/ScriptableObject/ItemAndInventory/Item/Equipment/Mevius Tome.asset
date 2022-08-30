@@ -10,17 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df69dee184c46424ea847c333c28d48f, type: 3}
-  m_Name: Mevius Wand
+  m_Name: Mevius Tome
   m_EditorClassIdentifier: 
-  ItemId: -759130426
+  ItemId: 1872921182
   ItemType: 1
-  ItemName: Mevius Wand
-  ItemIcon: {fileID: 21300000, guid: 9c4f8689a4ea2c04d9df4700e00fcd77, type: 3}
-  Buffs:
-  - Attribute: 1
-    Value: 0
-    Min: 5
-    Max: 20
-  ItemDescription: 
+  ItemName: Mevius Tome
+  ItemIcon: {fileID: 21300000, guid: f5df00b496acc1a4e94c50a318e24cbf, type: 3}
+  Buffs: []
+  ItemDescription: The Time from Avabel realm.
   MaximumStacks: 1
   <equipType>k__BackingField: 0

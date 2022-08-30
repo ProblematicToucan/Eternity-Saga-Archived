@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class InventoryUI : MonoBehaviour
 {
     private Dictionary<InventorySlot, GameObject> itemsDisplayed = new Dictionary<InventorySlot, GameObject>();
-    [SerializeField] private InventorySO inventory;
+    [SerializeField] private InventorySO inventorySO;
     [SerializeField] private GameObject itemSlotPrefab; // Item slot prefab to be instantiate.
     [SerializeField] private RectTransform inventoryPanel; // Inventory Panel for parenting all the item slots
     [SerializeField] private EventSO[] onEnableEvents; // Array event to be triggered when the inventory is enabled.
@@ -16,7 +18,7 @@ public class InventoryUI : MonoBehaviour
         {
             onEnableEvents[i]?.Raise();
         }
-        inventory.OnInventoryChanged += RefreshDisplay;
+        inventorySO.OnInventoryChanged += RefreshDisplay;
         RefreshDisplay();
     }
 
@@ -26,26 +28,38 @@ public class InventoryUI : MonoBehaviour
         {
             onDisableEvents[i]?.Raise();
         }
-        inventory.OnInventoryChanged -= RefreshDisplay;
+        inventorySO.OnInventoryChanged -= RefreshDisplay;
     }
 
-    public void RefreshDisplay()
+    public async void RefreshDisplay()
     {
-        for (int i = 0; i < inventory.inventorySlots.Count; i++)
+        for (int i = 0; i < inventorySO.inventorySlots.Count; i++)
         {
-            if (itemsDisplayed.ContainsKey(inventory.inventorySlots[i]))
+            if (itemsDisplayed.ContainsKey(inventorySO.inventorySlots[i]))
             {
-                itemsDisplayed[inventory.inventorySlots[i]]
+                var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[i].Item.Id);
+                itemsDisplayed[inventorySO.inventorySlots[i]]
                     .GetComponent<ItemSlotUI>()
-                    .UpdateDisplay(inventory.inventorySlots[i].item, inventory.inventorySlots[i].amount);
+                    .UpdateDisplay(itemSO, inventorySO.inventorySlots[i].Amount);
             }
             else
             {
+                var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[i].Item.Id);
                 var clonedItemSlot = Instantiate(itemSlotPrefab, inventoryPanel);
                 var itemSlotUI = clonedItemSlot.GetComponent<ItemSlotUI>();
-                itemSlotUI.UpdateDisplay(inventory.inventorySlots[i].item, inventory.inventorySlots[i].amount);
-                itemsDisplayed.Add(inventory.inventorySlots[i], clonedItemSlot);
+                itemSlotUI.UpdateDisplay(itemSO, inventorySO.inventorySlots[i].Amount);
+                itemsDisplayed.Add(inventorySO.inventorySlots[i], clonedItemSlot);
             }
         }
+        var arrayOfAllKeys = itemsDisplayed.Keys.ToArray();
+        for (int i = arrayOfAllKeys.Length - 1; i >= 0; i--)
+        {
+            if (!inventorySO.inventorySlots.Contains(arrayOfAllKeys[i]))
+            {
+                Destroy(itemsDisplayed[arrayOfAllKeys[i]]);
+                itemsDisplayed.Remove(arrayOfAllKeys[i]);
+            }
+        }
+        await Task.Yield();
     }
 }

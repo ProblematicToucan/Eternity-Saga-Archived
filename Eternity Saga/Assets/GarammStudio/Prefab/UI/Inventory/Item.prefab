@@ -456,10 +456,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94880c4d09f95fe4f83bfb98540cfb60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 0aec99a24cbc2c0418890e80856017d3, type: 2}
-  <itemImage>k__BackingField: {fileID: 8268097171794893277}
-  <itemCount>k__BackingField: {fileID: 8182950780597848621}
-  <itemName>k__BackingField: {fileID: 9153822300333427166}
+  Item: {fileID: 0}
+  <ItemImage>k__BackingField: {fileID: 8268097171794893277}
+  <ItemCount>k__BackingField: {fileID: 8182950780597848621}
+  <ItemName>k__BackingField: {fileID: 9153822300333427166}
 --- !u!1 &4820909320257298895
 GameObject:
   m_ObjectHideFlags: 0

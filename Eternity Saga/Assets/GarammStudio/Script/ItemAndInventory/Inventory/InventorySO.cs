@@ -7,43 +7,48 @@ using UnityEngine.Events;
 public class InventorySO : ScriptableObject
 {
     public event UnityAction OnInventoryChanged;
-    [SerializeField] private ItemDatabaseSO itemDatabase;
-    [field: SerializeField] public int capacity { get; private set; } = 50;
+    [field: SerializeField] public ItemDatabaseSO ItemDatabase { get; private set; }
+    [field: SerializeField] public int Capacity { get; private set; } = 50;
     public List<InventorySlot> inventorySlots;
 
-    public bool IsFull() => inventorySlots.Count >= capacity;
+    public bool IsFull() => inventorySlots.Count >= Capacity;
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            if (inventorySlots[i].item != null)
+            if (inventorySlots[i].Item != null)
             {
-                inventorySlots[i].itemID = inventorySlots[i].item.itemID;
+                inventorySlots[i].ItemID = inventorySlots[i].Item.Id;
             }
         }
     }
 #endif
 
-    public void AddItem(ItemSO _item, int _amount)
+    public void AddItem(Item _item, int _amount)
     {
         var hasItem = false;
-        var itemIdOnDatabase = itemDatabase.GetIdReferenceByItemSO(_item);
-        var itemOnDatabase = itemDatabase.GetItemSOReferenceById(itemIdOnDatabase);
+        var itemOnDatabase = ItemDatabase.GetItemSOReferenceById(_item.Id);
         if (itemOnDatabase == null) return;
+        if (_item.Buffs.Length > 0)
+        {
+            inventorySlots.Add(new InventorySlot(_item, _amount));
+            OnInventoryChanged?.Invoke();
+            return;
+        }
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            if (inventorySlots[i].item.itemID == itemIdOnDatabase)
+            if (inventorySlots[i].Item.Id == _item.Id)
             {
-                inventorySlots[i].amount += _amount;
+                inventorySlots[i].Amount += _amount;
                 hasItem = true;
                 break;
             }
         }
         if (!hasItem && !IsFull())
         {
-            inventorySlots.Add(new InventorySlot(itemOnDatabase, _amount));
+            inventorySlots.Add(new InventorySlot(_item, _amount));
         }
         OnInventoryChanged?.Invoke();
     }
@@ -59,7 +64,7 @@ public class InventorySO : ScriptableObject
         inventorySlots.Clear();
     }
 
-    private void OnTouch(ItemSO obj, int amount)
+    private void OnTouch(Item obj, int amount)
     {
         AddItem(obj, amount);
     }
@@ -72,7 +77,7 @@ public class InventorySO : ScriptableObject
         var saveFile = Path.Combine(baseSavePath, this.name);
         for (int i = 0; i < inventorySlots.Count; i++)
         {
-            saveDatas.Add(new InventorySaveData(inventorySlots[i].itemID, inventorySlots[i].amount));
+            saveDatas.Add(new InventorySaveData(inventorySlots[i].ItemID, inventorySlots[i].Amount, inventorySlots[i].Item.Buffs));
         }
         FileReadWrite.WriteToBinaryFile(saveFile + ".dat", saveDatas);
     }
@@ -86,42 +91,54 @@ public class InventorySO : ScriptableObject
         inventorySlots.Clear();
         for (int i = 0; i < savedDatas.Count; i++)
         {
-            AddItem(itemDatabase.GetItemSOReferenceById(savedDatas[i].itemID), savedDatas[i].amount);
+            AddItem(new Item(ItemDatabase.GetItemSOReferenceById(savedDatas[i].ItemID), savedDatas[i].Buffs), savedDatas[i].Amount);
         }
     }
 }
 
 /// <summary>
-/// Contains itemID, itemSO and amount
+/// Class slot item on inventory that contains itemID, itemSO and amount.
 /// </summary>
 [System.Serializable]
 public class InventorySlot
 {
-    public int itemID;
-    public ItemSO item;
-    public int amount;
+    public int ItemID;
+    public Item Item;
+    public int Amount;
+
+    /// <summary>
+    /// Constuctor InventorySlot.
+    /// </summary>
     public InventorySlot()
     {
-        itemID = -1;
-        item = null;
-        amount = 0;
+        ItemID = -1;
+        Item = null;
+        Amount = 0;
     }
-    public InventorySlot(ItemSO _itemSO, int _amount)
+
+    /// <summary>
+    /// Constructor InventorySlot with ItemSO and Amount.
+    /// </summary>
+    /// <param name="_itemSO">itemSO</param>
+    /// <param name="_amount">item amount</param>
+    public InventorySlot(Item _itemSO, int _amount)
     {
-        itemID = _itemSO.itemID;
-        item = _itemSO;
-        amount = _amount;
+        ItemID = _itemSO.Id;
+        Item = _itemSO;
+        Amount = _amount;
     }
 }
 
 [System.Serializable]
 public class InventorySaveData
 {
-    public int itemID;
-    public int amount;
-    public InventorySaveData(int _itemId, int _amount)
+    public int ItemID;
+    public int Amount;
+    public ItemBuff[] Buffs;
+    public InventorySaveData(int _itemId, int _amount, ItemBuff[] _buffs)
     {
-        itemID = _itemId;
-        amount = _amount;
+        ItemID = _itemId;
+        Amount = _amount;
+        Buffs = _buffs;
     }
 }

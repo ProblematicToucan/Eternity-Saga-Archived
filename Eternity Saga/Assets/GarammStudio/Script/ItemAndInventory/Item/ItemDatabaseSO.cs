@@ -9,7 +9,7 @@ public class ItemDatabaseSO : ScriptableObject
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i].itemID == _itemId)
+            if (items[i].ItemId == _itemId)
             {
                 return items[i];
             }
@@ -23,7 +23,7 @@ public class ItemDatabaseSO : ScriptableObject
         {
             if (items[i] == _itemSO)
             {
-                return items[i].itemID;
+                return items[i].ItemId;
             }
         }
         return -1;

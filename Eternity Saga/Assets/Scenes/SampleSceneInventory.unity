@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c1d370fc139a440b37bcf63ed36eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: fc531cdbda3797d48840dd01da9c76d6, type: 2}
+  itemSO: {fileID: 11400000, guid: fc531cdbda3797d48840dd01da9c76d6, type: 2}
   amount: 2
 --- !u!135 &26405734
 SphereCollider:
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c1d370fc139a440b37bcf63ed36eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: d49af77d80452ee4c8708e1892467cc5, type: 2}
+  itemSO: {fileID: 11400000, guid: d49af77d80452ee4c8708e1892467cc5, type: 2}
   amount: 1
 --- !u!135 &333910847
 SphereCollider:
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c1d370fc139a440b37bcf63ed36eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 0aec99a24cbc2c0418890e80856017d3, type: 2}
+  itemSO: {fileID: 11400000, guid: 0aec99a24cbc2c0418890e80856017d3, type: 2}
   amount: 1
 --- !u!135 &758433423
 SphereCollider:
@@ -1271,7 +1271,7 @@ GameObject:
   - component: {fileID: 1516981823}
   - component: {fileID: 1516981822}
   m_Layer: 0
-  m_Name: DropSword
+  m_Name: DropTome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1303,7 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c1d370fc139a440b37bcf63ed36eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 0aec99a24cbc2c0418890e80856017d3, type: 2}
+  itemSO: {fileID: 11400000, guid: a40a2c6476a660a49883cfa49d3d9748, type: 2}
   amount: 1
 --- !u!135 &1516981823
 SphereCollider:
@@ -1656,11 +1656,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5930254121006915768, guid: bcd0598f4341a144da89919bb0de6ec8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00000003296683
+      value: -0.000000032966827
       objectReference: {fileID: 0}
     - target: {fileID: 5930254121006915768, guid: bcd0598f4341a144da89919bb0de6ec8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000004838502
+      value: 0.0000000048385016
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcd0598f4341a144da89919bb0de6ec8, type: 3}
