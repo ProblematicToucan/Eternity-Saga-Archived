@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Player Bag
   m_EditorClassIdentifier: 
   <ItemDatabase>k__BackingField: {fileID: 11400000, guid: d63662f56025e2948b2288f007f349f6, type: 2}
-  <capacity>k__BackingField: 50
+  <Capacity>k__BackingField: 50
   inventorySlots: []

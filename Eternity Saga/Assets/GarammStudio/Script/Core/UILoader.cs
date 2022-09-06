@@ -19,7 +19,11 @@ public class UILoader : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_EDITOR
+        Application.targetFrameRate = 300;
+#else
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
+#endif
     }
 
     private void OnGUI()
