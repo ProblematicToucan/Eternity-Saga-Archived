@@ -5,6 +5,11 @@ public class ItemDatabaseSO : ScriptableObject
 {
     [SerializeField] private ItemSO[] items;
 
+    /// <summary>
+    /// Get ItemSO with item id from databse.
+    /// </summary>
+    /// <param name="_itemId">id of the item.</param>
+    /// <returns>ItemSO.</returns>
     public ItemSO GetItemSOReferenceById(int _itemId)
     {
         for (int i = 0; i < items.Length; i++)

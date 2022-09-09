@@ -1,17 +1,12 @@
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using System.Threading.Tasks;
 
-public class InventoryUI : MonoBehaviour
+public class InventoryUI : MonoBehaviour, IRecyclerviewDelegate
 {
-    private Dictionary<InventorySlot, GameObject> itemsDisplayed = new Dictionary<InventorySlot, GameObject>();
-    [SerializeField] private InventorySO inventorySO;
-    [SerializeField] private GameObject itemSlotPrefab; // Item slot prefab to be instantiate.
-    [SerializeField] private RectTransform inventoryPanel; // Inventory Panel for parenting all the item slots
+    [field: SerializeField] public Recyclerview Recyclerview { get; private set; }
+    [field: SerializeField] public RecyclerCellView RecyclerCellViewPrefab { get; private set; }
+    [SerializeField] private InventorySO inventorySO; // Inventory ScriptableObject that hold data to show.
     [SerializeField] private EventSO[] onEnableEvents; // Array event to be triggered when the inventory is enabled.
     [SerializeField] private EventSO[] onDisableEvents; // Array event to be triggered when the inventory is disabled.
-
     private void OnEnable()
     {
         for (int i = 0; i < onEnableEvents.Length; i++)
@@ -31,35 +26,35 @@ public class InventoryUI : MonoBehaviour
         inventorySO.OnInventoryChanged -= RefreshDisplay;
     }
 
-    public async void RefreshDisplay()
+    private void Start()
     {
-        for (int i = 0; i < inventorySO.inventorySlots.Count; i++)
-        {
-            if (itemsDisplayed.ContainsKey(inventorySO.inventorySlots[i]))
-            {
-                var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[i].Item.Id);
-                itemsDisplayed[inventorySO.inventorySlots[i]]
-                    .GetComponent<ItemSlotUI>()
-                    .UpdateDisplay(itemSO, inventorySO.inventorySlots[i].Amount);
-            }
-            else
-            {
-                var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[i].Item.Id);
-                var clonedItemSlot = Instantiate(itemSlotPrefab, inventoryPanel);
-                var itemSlotUI = clonedItemSlot.GetComponent<ItemSlotUI>();
-                itemSlotUI.UpdateDisplay(itemSO, inventorySO.inventorySlots[i].Amount);
-                itemsDisplayed.Add(inventorySO.inventorySlots[i], clonedItemSlot);
-            }
-        }
-        var arrayOfAllKeys = itemsDisplayed.Keys.ToArray();
-        for (int i = arrayOfAllKeys.Length - 1; i >= 0; i--)
-        {
-            if (!inventorySO.inventorySlots.Contains(arrayOfAllKeys[i]))
-            {
-                Destroy(itemsDisplayed[arrayOfAllKeys[i]]);
-                itemsDisplayed.Remove(arrayOfAllKeys[i]);
-            }
-        }
-        await Task.Yield();
+        Recyclerview.Delegate = this;
+        Recyclerview.ReloadData();
+    }
+
+    public void RefreshDisplay()
+    {
+        Recyclerview.ReloadData();
+    }
+
+    public int GetNumberOfCells(Recyclerview _recyclerview)
+    {
+        return inventorySO.inventorySlots.Count;
+    }
+
+    public float GetCellViewSize(Recyclerview _recyclerview, int _dataIndex)
+    {
+        return 200;
+    }
+
+    public RecyclerCellView GetCellView(Recyclerview _recyclerview, int _dataIndex, int _cellIndex)
+    {
+        var cellView = Recyclerview.GetCellView(RecyclerCellViewPrefab) as ItemSlotUI;
+        cellView.name = _dataIndex.ToString();
+        cellView.SetData(
+            inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[_dataIndex].ItemID),
+            inventorySO.inventorySlots[_dataIndex].Amount
+        );
+        return cellView;
     }
 }

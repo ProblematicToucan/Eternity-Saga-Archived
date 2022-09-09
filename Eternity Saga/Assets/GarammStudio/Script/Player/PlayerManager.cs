@@ -41,7 +41,7 @@ public class PlayerManager : Character
     private void OnDisable()
     {
         StateController.OnExit();
-        Inventory?.UnregisterEvent();
+        Inventory?.UnRegisterEvent();
     }
 
     private void OnDrawGizmosSelected()
