@@ -25,6 +25,11 @@ public class MoveActionSO : ActionSO
         Movement();
     }
 
+    internal override void OnUpdateAction()
+    {
+
+    }
+
     private void Movement()
     {
         // set target speed based on move speed, sprint speed and if sprint is pressed
@@ -102,10 +107,5 @@ public class MoveActionSO : ActionSO
             _manager.AnimatorController.Anim.SetFloat(_manager.AnimatorController.AnimIDSpeed, _manager.Locomotion.animationBlend);
             _manager.AnimatorController.Anim.SetFloat(_manager.AnimatorController.AnimIDMotionSpeed, 1);
         }
-    }
-
-    internal override void OnUpdateAction()
-    {
-
     }
 }

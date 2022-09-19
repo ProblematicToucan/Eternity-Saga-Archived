@@ -226,7 +226,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// are not displayed yet. Good for tweening and loading external resources.
     /// </summary>
     private float _lookAheadBefore;
-    public float lookAheadBefore
+    public float LookAheadBefore
     {
         get
         {
@@ -244,7 +244,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// are not displayed yet. Good for tweening and loading external resources.
     /// </summary>
     private float _lookAheadAfter;
-    public float lookAheadAfter
+    public float LookAheadAfter
     {
         get
         {
@@ -407,7 +407,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
                 // call resize to generate more internal elements if loop is on,
                 // remove the elements if loop is off
-                _Resize(false);
+                Resize(false);
 
                 if (loop)
                 {
@@ -656,7 +656,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public RecyclerCellView GetCellView(RecyclerCellView cellPrefab)
     {
         // see if there is a view to recycle
-        var cellView = _GetRecycledCellView(cellPrefab);
+        var cellView = GetRecycledCellView(cellPrefab);
         if (cellView == null)
         {
             // no recyleable cell found, so we create a new view
@@ -668,10 +668,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             cellView.transform.localRotation = Quaternion.identity;
 
             // call the instantiated callback
-            if (cellViewInstantiated != null)
-            {
-                cellViewInstantiated(this, cellView);
-            }
+            cellViewInstantiated?.Invoke(this, cellView);
         }
         else
         {
@@ -679,10 +676,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             cellView.gameObject.SetActive(true);
 
             // call the reused callback
-            if (cellViewReused != null)
-            {
-                cellViewReused(this, cellView);
-            }
+            cellViewReused?.Invoke(this, cellView);
         }
 
         return cellView;
@@ -698,12 +692,12 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         // recycle all the active cells so
         // that we are sure to get fresh views
-        _RecycleAllCells();
+        RecycleAllCells();
 
         // if we have a delegate handling our data, then
         // call the resize
         if (_delegate != null)
-            _Resize(false);
+            Resize(false);
 
         if (_scrollRect == null || _scrollRectTransform == null || _container == null)
         {
@@ -723,7 +717,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             _scrollRect.horizontalNormalizedPosition = scrollPositionFactor;
         }
 
-        _RefreshActive();
+        RefreshActive();
     }
 
     /// <summary>
@@ -815,7 +809,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void SetScrollPositionImmediately(float scrollPosition)
     {
         ScrollPosition = scrollPosition;
-        _RefreshActive();
+        RefreshActive();
     }
 
     public enum LoopJumpDirectionEnum
@@ -1019,7 +1013,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         // ignore the jump if the scroll position hasn't changed
         if (newScrollPosition == _scrollPosition)
         {
-            if (jumpComplete != null) jumpComplete();
+            jumpComplete?.Invoke();
             return;
         }
 
@@ -1117,7 +1111,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public int GetCellViewIndexAtPosition(float position)
     {
         // call the overrloaded method on the entire range of the list
-        return _GetCellIndexAtPosition(position, 0, _cellViewOffsetArray.Count - 1);
+        return GetCellIndexAtPosition(position, 0, _cellViewOffsetArray.Count - 1);
     }
 
     /// <summary>
@@ -1199,12 +1193,12 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <summary>
     /// Flag to tell the scroller to refresh the active list of cell views
     /// </summary>
-    private bool _refreshActive;
+    private readonly bool _refreshActive;
 
     /// <summary>
     /// List of views that have been recycled
     /// </summary>
-    private SmallList<RecyclerCellView> _recycledCellViews = new SmallList<RecyclerCellView>();
+    private readonly SmallList<RecyclerCellView> _recycledCellViews = new SmallList<RecyclerCellView>();
 
     /// <summary>
     /// Cached reference to the element used to offset the first visible cell view
@@ -1225,14 +1219,14 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// Internal list of cell view sizes. This is created when the data is reloaded
     /// to speed up processing.
     /// </summary>
-    private SmallList<float> _cellViewSizeArray = new SmallList<float>();
+    private readonly SmallList<float> _cellViewSizeArray = new SmallList<float>();
 
     /// <summary>
     /// Internal list of cell view offsets. Each cell view offset is an accumulation
     /// of the offsets previous to it.
     /// This is created when the data is reloaded to speed up processing.
     /// </summary>
-    private SmallList<float> _cellViewOffsetArray = new SmallList<float>();
+    private readonly SmallList<float> _cellViewOffsetArray = new SmallList<float>();
 
     /// <summary>
     /// The scrollers position
@@ -1242,7 +1236,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <summary>
     /// The list of cell views that are currently being displayed
     /// </summary>
-    private SmallList<RecyclerCellView> _activeCellViews = new SmallList<RecyclerCellView>();
+    private readonly SmallList<RecyclerCellView> _activeCellViews = new SmallList<RecyclerCellView>();
 
     /// <summary>
     /// The index of the first cell view that is being displayed
@@ -1371,14 +1365,14 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// It also sets up the loop triggers and positions and initializes the cell views.
     /// </summary>
     /// <param name="keepPosition">If true, then the scroller will try to go back to the position it was at before the resize</param>
-    private void _Resize(bool keepPosition)
+    private void Resize(bool keepPosition)
     {
         // cache the original position
         var originalScrollPosition = _scrollPosition;
 
         // clear out the list of cell view sizes and create a new list
         _cellViewSizeArray.Clear();
-        var offset = _AddCellViewSizes();
+        var offset = AddCellViewSizes();
 
         // if looping, we need to create three sets of size data
         if (loop)
@@ -1390,7 +1384,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             if (offset < ScrollRectSize)
             {
                 int additionalRounds = Mathf.CeilToInt((float)Mathf.CeilToInt(ScrollRectSize / offset) / 2.0f) * 2;
-                _DuplicateCellViewSizes(additionalRounds, cellCount);
+                DuplicateCellViewSizes(additionalRounds, cellCount);
                 _loopFirstCellIndex = cellCount * (1 + (additionalRounds / 2));
             }
             else
@@ -1401,11 +1395,11 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             _loopLastCellIndex = _loopFirstCellIndex + cellCount - 1;
 
             // create two more copies of the cell sizes
-            _DuplicateCellViewSizes(2, cellCount);
+            DuplicateCellViewSizes(2, cellCount);
         }
 
         // calculate the offsets of each cell view
-        _CalculateCellViewOffsets();
+        CalculateCellViewOffsets();
 
         // set the size of the active cell view container based on the number of cell views there are and each of their sizes
         if (scrollDirection == ScrollDirectionEnum.Vertical)
@@ -1424,7 +1418,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
 
         // create the visibile cells
-        _ResetVisibleCellViews();
+        ResetVisibleCellViews();
 
         // if we need to maintain our original position
         if (keepPosition)
@@ -1451,7 +1445,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// Updates the spacing on the scroller
     /// </summary>
     /// <param name="spacing">new spacing value</param>
-    private void _UpdateSpacing(float spacing)
+    private void UpdateSpacing(float spacing)
     {
         _updateSpacing = false;
         _layoutGroup.spacing = spacing;
@@ -1462,7 +1456,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// Creates a list of cell view sizes for faster access
     /// </summary>
     /// <returns></returns>
-    private float _AddCellViewSizes()
+    private float AddCellViewSizes()
     {
         var offset = 0f;
         _singleLoopGroupSize = 0;
@@ -1483,7 +1477,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// </summary>
     /// <param name="numberOfTimes">How many times the copy should be made</param>
     /// <param name="cellCount">How many cells to copy</param>
-    private void _DuplicateCellViewSizes(int numberOfTimes, int cellCount)
+    private void DuplicateCellViewSizes(int numberOfTimes, int cellCount)
     {
         for (var i = 0; i < numberOfTimes; i++)
         {
@@ -1497,7 +1491,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <summary>
     /// Calculates the offset of each cell, accumulating the values from previous cells
     /// </summary>
-    private void _CalculateCellViewOffsets()
+    private void CalculateCellViewOffsets()
     {
         _cellViewOffsetArray.Clear();
         var offset = 0f;
@@ -1513,7 +1507,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// </summary>
     /// <param name="cellPrefab">The prefab to check for</param>
     /// <returns></returns>
-    private RecyclerCellView _GetRecycledCellView(RecyclerCellView cellPrefab)
+    private RecyclerCellView GetRecycledCellView(RecyclerCellView cellPrefab)
     {
         for (var i = 0; i < _recycledCellViews.Count; i++)
         {
@@ -1532,13 +1526,11 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <summary>
     /// This sets up the visible cells, adding and recycling as necessary
     /// </summary>
-    private void _ResetVisibleCellViews()
+    private void ResetVisibleCellViews()
     {
-        int startIndex;
-        int endIndex;
 
         // calculate the range of the visible cells
-        _CalculateCurrentActiveCellRange(out startIndex, out endIndex);
+        CalculateCurrentActiveCellRange(out int startIndex, out int endIndex);
 
         // go through each previous active cell and recycle it if it no longer falls in the range
         var i = 0;
@@ -1547,7 +1539,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         {
             if (_activeCellViews[i].cellIndex < startIndex || _activeCellViews[i].cellIndex > endIndex)
             {
-                _RecycleCell(_activeCellViews[i]);
+                RecycleCell(_activeCellViews[i]);
             }
             else
             {
@@ -1567,7 +1559,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
             for (i = startIndex; i <= endIndex; i++)
             {
-                _AddCellView(i, ListPositionEnum.Last);
+                AddCellView(i, ListPositionEnum.Last);
             }
         }
         else
@@ -1582,7 +1574,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             {
                 if (i < remainingCellIndices.First())
                 {
-                    _AddCellView(i, ListPositionEnum.First);
+                    AddCellView(i, ListPositionEnum.First);
                 }
             }
 
@@ -1593,7 +1585,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             {
                 if (i > remainingCellIndices.Last())
                 {
-                    _AddCellView(i, ListPositionEnum.Last);
+                    AddCellView(i, ListPositionEnum.Last);
                 }
             }
         }
@@ -1603,15 +1595,15 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         _activeCellViewsEndIndex = endIndex;
 
         // adjust the padding elements to offset the cell views correctly
-        _SetPadders();
+        SetPadders();
     }
 
     /// <summary>
     /// Recycles all the active cells
     /// </summary>
-    private void _RecycleAllCells()
+    private void RecycleAllCells()
     {
-        while (_activeCellViews.Count > 0) _RecycleCell(_activeCellViews[0]);
+        while (_activeCellViews.Count > 0) RecycleCell(_activeCellViews[0]);
         _activeCellViewsStartIndex = 0;
         _activeCellViewsEndIndex = 0;
     }
@@ -1620,9 +1612,9 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// Recycles one cell view
     /// </summary>
     /// <param name="cellView"></param>
-    private void _RecycleCell(RecyclerCellView cellView)
+    private void RecycleCell(RecyclerCellView cellView)
     {
-        if (cellViewWillRecycle != null) cellViewWillRecycle(cellView);
+        cellViewWillRecycle?.Invoke(cellView);
 
         // remove the cell view from the active list
         _activeCellViews.Remove(cellView);
@@ -1641,7 +1633,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         cellView.cellIndex = 0;
         cellView.active = false;
 
-        if (cellViewVisibilityChanged != null) cellViewVisibilityChanged(cellView);
+        cellViewVisibilityChanged?.Invoke(cellView);
     }
 
     /// <summary>
@@ -1649,7 +1641,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// </summary>
     /// <param name="cellIndex">The index of the cell view</param>
     /// <param name="listPosition">Whether to add the cell to the beginning or the end</param>
-    private void _AddCellView(int cellIndex, ListPositionEnum listPosition)
+    private void AddCellView(int cellIndex, ListPositionEnum listPosition)
     {
         if (NumberOfCells == 0) return;
 
@@ -1690,14 +1682,14 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             cellView.transform.SetSiblingIndex(1);
 
         // call the visibility change delegate if available
-        if (cellViewVisibilityChanged != null) cellViewVisibilityChanged(cellView);
+        cellViewVisibilityChanged?.Invoke(cellView);
     }
 
     /// <summary>
     /// This function adjusts the two padders that control the first cell view's
     /// offset and the overall size of each cell.
     /// </summary>
-    private void _SetPadders()
+    private void SetPadders()
     {
         if (NumberOfCells == 0) return;
 
@@ -1730,13 +1722,11 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <summary>
     /// This function is called if the scroller is scrolled, updating the active list of cells
     /// </summary>
-    private void _RefreshActive()
+    private void RefreshActive()
     {
         //_refreshActive = false;
 
-        int startIndex;
-        int endIndex;
-        var velocity = Vector2.zero;
+        Vector2 velocity;
 
         // if looping, check to see if we scrolled past a trigger
         if (loop && !_ignoreLoopJump)
@@ -1756,13 +1746,13 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
 
         // get the range of visibile cells
-        _CalculateCurrentActiveCellRange(out startIndex, out endIndex);
+        CalculateCurrentActiveCellRange(out int startIndex, out int endIndex);
 
         // if the index hasn't changed, ignore and return
         if (startIndex == _activeCellViewsStartIndex && endIndex == _activeCellViewsEndIndex) return;
 
         // recreate the visibile cells
-        _ResetVisibleCellViews();
+        ResetVisibleCellViews();
     }
 
     /// <summary>
@@ -1770,14 +1760,12 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// </summary>
     /// <param name="startIndex">The index of the first cell visible</param>
     /// <param name="endIndex">The index of the last cell visible</param>
-    private void _CalculateCurrentActiveCellRange(out int startIndex, out int endIndex)
+    private void CalculateCurrentActiveCellRange(out int startIndex, out int endIndex)
     {
-        startIndex = 0;
-        endIndex = 0;
 
         // get the positions of the scroller
-        var startPosition = _scrollPosition - lookAheadBefore;
-        var endPosition = _scrollPosition + (scrollDirection == ScrollDirectionEnum.Vertical ? _scrollRectTransform.rect.height : _scrollRectTransform.rect.width) + lookAheadAfter;
+        var startPosition = _scrollPosition - LookAheadBefore;
+        var endPosition = _scrollPosition + (scrollDirection == ScrollDirectionEnum.Vertical ? _scrollRectTransform.rect.height : _scrollRectTransform.rect.width) + LookAheadAfter;
 
         // calculate each index based on the positions
         startIndex = GetCellViewIndexAtPosition(startPosition);
@@ -1792,7 +1780,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     /// <param name="startIndex">The first index of the range</param>
     /// <param name="endIndex">The last index of the rnage</param>
     /// <returns></returns>
-    private int _GetCellIndexAtPosition(float position, int startIndex, int endIndex)
+    private int GetCellIndexAtPosition(float position, int startIndex, int endIndex)
     {
         // if the range is invalid, then we found our index, return the start index
         if (startIndex >= endIndex) return startIndex;
@@ -1804,9 +1792,9 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         // half of the binary tree, else search the first half
         var pad = scrollDirection == ScrollDirectionEnum.Vertical ? padding.top : padding.left;
         if ((_cellViewOffsetArray[middleIndex] + pad) >= (position + (pad == 0 ? 0 : 1.00001f)))
-            return _GetCellIndexAtPosition(position, startIndex, middleIndex);
+            return GetCellIndexAtPosition(position, startIndex, middleIndex);
         else
-            return _GetCellIndexAtPosition(position, middleIndex + 1, endIndex);
+            return GetCellIndexAtPosition(position, middleIndex + 1, endIndex);
     }
 
     /// <summary>
@@ -1947,7 +1935,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     {
         if (_updateSpacing)
         {
-            _UpdateSpacing(spacing);
+            UpdateSpacing(spacing);
             _reloadData = false;
         }
 
@@ -1965,7 +1953,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
                 (loop != _lastLoop)
             )
         {
-            _Resize(true);
+            Resize(true);
             _lastScrollRectSize = ScrollRectSize;
 
             _lastLoop = loop;
@@ -1983,12 +1971,12 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         if (LinearVelocity != 0 && !IsScrolling)
         {
             IsScrolling = true;
-            if (scrollerScrollingChanged != null) scrollerScrollingChanged(this, true);
+            scrollerScrollingChanged?.Invoke(this, true);
         }
         else if (LinearVelocity == 0 && IsScrolling)
         {
             IsScrolling = false;
-            if (scrollerScrollingChanged != null) scrollerScrollingChanged(this, false);
+            scrollerScrollingChanged?.Invoke(this, false);
         }
     }
 
@@ -2027,20 +2015,20 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     void OnEnable()
     {
         // when the scroller is enabled, add a listener to the onValueChanged handler
-        _scrollRect.onValueChanged.AddListener(_ScrollRect_OnValueChanged);
+        _scrollRect.onValueChanged.AddListener(ScrollRect_OnValueChanged);
     }
 
     void OnDisable()
     {
         // when the scroller is disabled, remove the listener
-        _scrollRect.onValueChanged.RemoveListener(_ScrollRect_OnValueChanged);
+        _scrollRect.onValueChanged.RemoveListener(ScrollRect_OnValueChanged);
     }
 
     /// <summary>
     /// Handler for when the scroller changes value
     /// </summary>
     /// <param name="val">The scroll rect's value</param>
-    private void _ScrollRect_OnValueChanged(Vector2 val)
+    private void ScrollRect_OnValueChanged(Vector2 val)
     {
         // set the internal scroll position
         if (scrollDirection == ScrollDirectionEnum.Vertical)
@@ -2051,7 +2039,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         _scrollPosition = Mathf.Clamp(_scrollPosition, 0, ScrollSize);
 
         // call the handler if it exists
-        if (scrollerScrolled != null) scrollerScrolled(this, val, _scrollPosition);
+        scrollerScrolled?.Invoke(this, val, _scrollPosition);
 
         // if the snapping is turned on, handle it
         if (snapping && !_snapJumping)
@@ -2069,7 +2057,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             }
         }
 
-        _RefreshActive();
+        RefreshActive();
 
     }
 
@@ -2093,7 +2081,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
 
         // fire the scroller snapped delegate
-        if (scrollerSnapped != null) scrollerSnapped(this, _snapCellViewIndex, _snapDataIndex, cellView);
+        scrollerSnapped?.Invoke(this, _snapCellViewIndex, _snapDataIndex, cellView);
     }
 
     #endregion
@@ -2161,7 +2149,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
             // fire the delegate for the tween start
             IsTweening = true;
-            if (scrollerTweeningChanged != null) scrollerTweeningChanged(this, true);
+            scrollerTweeningChanged?.Invoke(this, true);
 
             _tweenTimeLeft = 0;
             var newPosition = 0f;
@@ -2171,38 +2159,38 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
             {
                 switch (tweenType)
                 {
-                    case TweenType.linear: newPosition = linear(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.spring: newPosition = spring(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInQuad: newPosition = easeInQuad(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutQuad: newPosition = easeOutQuad(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutQuad: newPosition = easeInOutQuad(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInCubic: newPosition = easeInCubic(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutCubic: newPosition = easeOutCubic(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutCubic: newPosition = easeInOutCubic(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInQuart: newPosition = easeInQuart(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutQuart: newPosition = easeOutQuart(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutQuart: newPosition = easeInOutQuart(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInQuint: newPosition = easeInQuint(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutQuint: newPosition = easeOutQuint(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutQuint: newPosition = easeInOutQuint(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInSine: newPosition = easeInSine(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutSine: newPosition = easeOutSine(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutSine: newPosition = easeInOutSine(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInExpo: newPosition = easeInExpo(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutExpo: newPosition = easeOutExpo(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutExpo: newPosition = easeInOutExpo(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInCirc: newPosition = easeInCirc(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutCirc: newPosition = easeOutCirc(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutCirc: newPosition = easeInOutCirc(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInBounce: newPosition = easeInBounce(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutBounce: newPosition = easeOutBounce(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutBounce: newPosition = easeInOutBounce(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInBack: newPosition = easeInBack(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutBack: newPosition = easeOutBack(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutBack: newPosition = easeInOutBack(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInElastic: newPosition = easeInElastic(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeOutElastic: newPosition = easeOutElastic(start, end, (_tweenTimeLeft / time)); break;
-                    case TweenType.easeInOutElastic: newPosition = easeInOutElastic(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.linear: newPosition = Linear(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.spring: newPosition = Spring(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInQuad: newPosition = EaseInQuad(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutQuad: newPosition = EaseOutQuad(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutQuad: newPosition = EaseInOutQuad(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInCubic: newPosition = EaseInCubic(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutCubic: newPosition = EaseOutCubic(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutCubic: newPosition = EaseInOutCubic(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInQuart: newPosition = EaseInQuart(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutQuart: newPosition = EaseOutQuart(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutQuart: newPosition = EaseInOutQuart(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInQuint: newPosition = EaseInQuint(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutQuint: newPosition = EaseOutQuint(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutQuint: newPosition = EaseInOutQuint(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInSine: newPosition = EaseInSine(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutSine: newPosition = EaseOutSine(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutSine: newPosition = EaseInOutSine(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInExpo: newPosition = EaseInExpo(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutExpo: newPosition = EaseOutExpo(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutExpo: newPosition = EaseInOutExpo(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInCirc: newPosition = EaseInCirc(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutCirc: newPosition = EaseOutCirc(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutCirc: newPosition = EaseInOutCirc(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInBounce: newPosition = EaseInBounce(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutBounce: newPosition = EaseOutBounce(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutBounce: newPosition = EaseInOutBounce(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInBack: newPosition = EaseInBack(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutBack: newPosition = EaseOutBack(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutBack: newPosition = EaseInOutBack(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInElastic: newPosition = EaseInElastic(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeOutElastic: newPosition = EaseOutElastic(start, end, (_tweenTimeLeft / time)); break;
+                    case TweenType.easeInOutElastic: newPosition = EaseInOutElastic(start, end, (_tweenTimeLeft / time)); break;
                 }
 
                 // set the scroll position to the tweened position
@@ -2221,43 +2209,43 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         if (forceCalculateRange)
         {
-            _RefreshActive();
+            RefreshActive();
         }
 
         // the tween jump is complete, so we fire the delegate
-        if (tweenComplete != null) tweenComplete();
+        tweenComplete?.Invoke();
 
         // fire the delegate for the tween ending
         IsTweening = false;
-        if (scrollerTweeningChanged != null) scrollerTweeningChanged(this, false);
+        scrollerTweeningChanged?.Invoke(this, false);
     }
 
 
-    private float linear(float start, float end, float val)
+    private float Linear(float start, float end, float val)
     {
         return Mathf.Lerp(start, end, val);
     }
 
-    private static float spring(float start, float end, float val)
+    private static float Spring(float start, float end, float val)
     {
         val = Mathf.Clamp01(val);
         val = (Mathf.Sin(val * Mathf.PI * (0.2f + 2.5f * val * val * val)) * Mathf.Pow(1f - val, 2.2f) + val) * (1f + (1.2f * (1f - val)));
         return start + (end - start) * val;
     }
 
-    private static float easeInQuad(float start, float end, float val)
+    private static float EaseInQuad(float start, float end, float val)
     {
         end -= start;
         return end * val * val + start;
     }
 
-    private static float easeOutQuad(float start, float end, float val)
+    private static float EaseOutQuad(float start, float end, float val)
     {
         end -= start;
         return -end * val * (val - 2) + start;
     }
 
-    private static float easeInOutQuad(float start, float end, float val)
+    private static float EaseInOutQuad(float start, float end, float val)
     {
         val /= .5f;
         end -= start;
@@ -2266,20 +2254,20 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return -end / 2 * (val * (val - 2) - 1) + start;
     }
 
-    private static float easeInCubic(float start, float end, float val)
+    private static float EaseInCubic(float start, float end, float val)
     {
         end -= start;
         return end * val * val * val + start;
     }
 
-    private static float easeOutCubic(float start, float end, float val)
+    private static float EaseOutCubic(float start, float end, float val)
     {
         val--;
         end -= start;
         return end * (val * val * val + 1) + start;
     }
 
-    private static float easeInOutCubic(float start, float end, float val)
+    private static float EaseInOutCubic(float start, float end, float val)
     {
         val /= .5f;
         end -= start;
@@ -2288,20 +2276,20 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return end / 2 * (val * val * val + 2) + start;
     }
 
-    private static float easeInQuart(float start, float end, float val)
+    private static float EaseInQuart(float start, float end, float val)
     {
         end -= start;
         return end * val * val * val * val + start;
     }
 
-    private static float easeOutQuart(float start, float end, float val)
+    private static float EaseOutQuart(float start, float end, float val)
     {
         val--;
         end -= start;
         return -end * (val * val * val * val - 1) + start;
     }
 
-    private static float easeInOutQuart(float start, float end, float val)
+    private static float EaseInOutQuart(float start, float end, float val)
     {
         val /= .5f;
         end -= start;
@@ -2310,20 +2298,20 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return -end / 2 * (val * val * val * val - 2) + start;
     }
 
-    private static float easeInQuint(float start, float end, float val)
+    private static float EaseInQuint(float start, float end, float val)
     {
         end -= start;
         return end * val * val * val * val * val + start;
     }
 
-    private static float easeOutQuint(float start, float end, float val)
+    private static float EaseOutQuint(float start, float end, float val)
     {
         val--;
         end -= start;
         return end * (val * val * val * val * val + 1) + start;
     }
 
-    private static float easeInOutQuint(float start, float end, float val)
+    private static float EaseInOutQuint(float start, float end, float val)
     {
         val /= .5f;
         end -= start;
@@ -2332,37 +2320,37 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return end / 2 * (val * val * val * val * val + 2) + start;
     }
 
-    private static float easeInSine(float start, float end, float val)
+    private static float EaseInSine(float start, float end, float val)
     {
         end -= start;
         return -end * Mathf.Cos(val / 1 * (Mathf.PI / 2)) + end + start;
     }
 
-    private static float easeOutSine(float start, float end, float val)
+    private static float EaseOutSine(float start, float end, float val)
     {
         end -= start;
         return end * Mathf.Sin(val / 1 * (Mathf.PI / 2)) + start;
     }
 
-    private static float easeInOutSine(float start, float end, float val)
+    private static float EaseInOutSine(float start, float end, float val)
     {
         end -= start;
         return -end / 2 * (Mathf.Cos(Mathf.PI * val / 1) - 1) + start;
     }
 
-    private static float easeInExpo(float start, float end, float val)
+    private static float EaseInExpo(float start, float end, float val)
     {
         end -= start;
         return end * Mathf.Pow(2, 10 * (val / 1 - 1)) + start;
     }
 
-    private static float easeOutExpo(float start, float end, float val)
+    private static float EaseOutExpo(float start, float end, float val)
     {
         end -= start;
         return end * (-Mathf.Pow(2, -10 * val / 1) + 1) + start;
     }
 
-    private static float easeInOutExpo(float start, float end, float val)
+    private static float EaseInOutExpo(float start, float end, float val)
     {
         val /= .5f;
         end -= start;
@@ -2371,20 +2359,20 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return end / 2 * (-Mathf.Pow(2, -10 * val) + 2) + start;
     }
 
-    private static float easeInCirc(float start, float end, float val)
+    private static float EaseInCirc(float start, float end, float val)
     {
         end -= start;
         return -end * (Mathf.Sqrt(1 - val * val) - 1) + start;
     }
 
-    private static float easeOutCirc(float start, float end, float val)
+    private static float EaseOutCirc(float start, float end, float val)
     {
         val--;
         end -= start;
         return end * Mathf.Sqrt(1 - val * val) + start;
     }
 
-    private static float easeInOutCirc(float start, float end, float val)
+    private static float EaseInOutCirc(float start, float end, float val)
     {
         val /= .5f;
         end -= start;
@@ -2393,14 +2381,14 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return end / 2 * (Mathf.Sqrt(1 - val * val) + 1) + start;
     }
 
-    private static float easeInBounce(float start, float end, float val)
+    private static float EaseInBounce(float start, float end, float val)
     {
         end -= start;
         float d = 1f;
-        return end - easeOutBounce(0, end, d - val) + start;
+        return end - EaseOutBounce(0, end, d - val) + start;
     }
 
-    private static float easeOutBounce(float start, float end, float val)
+    private static float EaseOutBounce(float start, float end, float val)
     {
         val /= 1f;
         end -= start;
@@ -2425,15 +2413,15 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         }
     }
 
-    private static float easeInOutBounce(float start, float end, float val)
+    private static float EaseInOutBounce(float start, float end, float val)
     {
         end -= start;
         float d = 1f;
-        if (val < d / 2) return easeInBounce(0, end, val * 2) * 0.5f + start;
-        else return easeOutBounce(0, end, val * 2 - d) * 0.5f + end * 0.5f + start;
+        if (val < d / 2) return EaseInBounce(0, end, val * 2) * 0.5f + start;
+        else return EaseOutBounce(0, end, val * 2 - d) * 0.5f + end * 0.5f + start;
     }
 
-    private static float easeInBack(float start, float end, float val)
+    private static float EaseInBack(float start, float end, float val)
     {
         end -= start;
         val /= 1;
@@ -2441,7 +2429,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return end * (val) * val * ((s + 1) * val - s) + start;
     }
 
-    private static float easeOutBack(float start, float end, float val)
+    private static float EaseOutBack(float start, float end, float val)
     {
         float s = 1.70158f;
         end -= start;
@@ -2449,7 +2437,7 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return end * ((val) * val * ((s + 1) * val + s) + 1) + start;
     }
 
-    private static float easeInOutBack(float start, float end, float val)
+    private static float EaseInOutBack(float start, float end, float val)
     {
         float s = 1.70158f;
         end -= start;
@@ -2464,19 +2452,19 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return end / 2 * ((val) * val * (((s) + 1) * val + s) + 2) + start;
     }
 
-    private static float easeInElastic(float start, float end, float val)
+    private static float EaseInElastic(float start, float end, float val)
     {
         end -= start;
 
         float d = 1f;
         float p = d * .3f;
-        float s = 0;
         float a = 0;
 
         if (val == 0) return start;
-        val = val / d;
+        val /= d;
         if (val == 1) return start + end;
 
+        float s;
         if (a == 0f || a < Mathf.Abs(end))
         {
             a = end;
@@ -2486,24 +2474,24 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         {
             s = p / (2 * Mathf.PI) * Mathf.Asin(end / a);
         }
-        val = val - 1;
+        val--;
         return -(a * Mathf.Pow(2, 10 * val) * Mathf.Sin((val * d - s) * (2 * Mathf.PI) / p)) + start;
     }
 
-    private static float easeOutElastic(float start, float end, float val)
+    private static float EaseOutElastic(float start, float end, float val)
     {
         end -= start;
 
         float d = 1f;
         float p = d * .3f;
-        float s = 0;
         float a = 0;
 
         if (val == 0) return start;
 
-        val = val / d;
+        val /= d;
         if (val == 1) return start + end;
 
+        float s;
         if (a == 0f || a < Mathf.Abs(end))
         {
             a = end;
@@ -2517,20 +2505,20 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         return (a * Mathf.Pow(2, -10 * val) * Mathf.Sin((val * d - s) * (2 * Mathf.PI) / p) + end + start);
     }
 
-    private static float easeInOutElastic(float start, float end, float val)
+    private static float EaseInOutElastic(float start, float end, float val)
     {
         end -= start;
 
         float d = 1f;
         float p = d * .3f;
-        float s = 0;
         float a = 0;
 
         if (val == 0) return start;
 
-        val = val / (d / 2);
+        val /= (d / 2);
         if (val == 2) return start + end;
 
+        float s;
         if (a == 0f || a < Mathf.Abs(end))
         {
             a = end;
@@ -2543,10 +2531,10 @@ public class Recyclerview : MonoBehaviour, IBeginDragHandler, IEndDragHandler
 
         if (val < 1)
         {
-            val = val - 1;
+            val--;
             return -0.5f * (a * Mathf.Pow(2, 10 * val) * Mathf.Sin((val * d - s) * (2 * Mathf.PI) / p)) + start;
         }
-        val = val - 1;
+        val--;
         return a * Mathf.Pow(2, -10 * val) * Mathf.Sin((val * d - s) * (2 * Mathf.PI) / p) * 0.5f + end + start;
     }
 
