@@ -1,7 +1,7 @@
-using UnityEngine;
 using GarammStudio.Script.Input;
-using UnityEngine.InputSystem;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "new InputReader", menuName = "GarammStudio/Input/InputReader")]
 public class InputReaderSO : ScriptableObject, GlobalControls.IGameplayActions, GlobalControls.INonGameplayActions

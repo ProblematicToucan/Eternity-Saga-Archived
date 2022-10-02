@@ -1,7 +1,7 @@
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Threading.Tasks;
 
 /// <summary>
 /// Delegate untuk menghandle UI button komponen.
