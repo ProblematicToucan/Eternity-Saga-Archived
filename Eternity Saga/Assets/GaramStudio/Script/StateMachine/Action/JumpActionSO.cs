@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GarammStudio/StateMachine/Player/Action/Jump", fileName = "New JumpAction")]
+[CreateAssetMenu(menuName = "GaramStudio/StateMachine/Player/Action/Jump", fileName = "New JumpAction")]
 public class JumpActionSO : ActionSO // Jump & gravity action.
 {
     private bool isJumping = false;

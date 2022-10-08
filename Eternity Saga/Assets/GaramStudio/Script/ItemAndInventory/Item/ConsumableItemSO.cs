@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Consumable Item", menuName = "GarammStudio/Items Inventory/Item/Consumable Item")]
+[CreateAssetMenu(fileName = "new Consumable Item", menuName = "GaramStudio/Items Inventory/Item/Consumable Item")]
 public class ConsumableItemSO : ItemSO
 {
     private void Awake()

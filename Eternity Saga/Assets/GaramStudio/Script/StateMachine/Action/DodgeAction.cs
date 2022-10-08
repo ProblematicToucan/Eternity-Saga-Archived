@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GarammStudio/StateMachine/Player/Action/Dodge", fileName = "New DodgeAction")]
+[CreateAssetMenu(menuName = "GaramStudio/StateMachine/Player/Action/Dodge", fileName = "New DodgeAction")]
 public class DodgeAction : ActionSO
 {
     internal override void OnEnterAction(PlayerManager manager)

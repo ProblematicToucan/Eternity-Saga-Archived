@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GarammStudio/StateMachine/Player/State", fileName = "New PlayerState")]
+[CreateAssetMenu(menuName = "GaramStudio/StateMachine/Player/State", fileName = "New PlayerState")]
 public class StateSO : ScriptableObject
 {
     private PlayerManager _manager;

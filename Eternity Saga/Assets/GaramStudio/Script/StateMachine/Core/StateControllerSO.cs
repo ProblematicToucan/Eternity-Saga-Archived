@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new StateController", menuName = "GarammStudio/StateMachine/Player/StateController")]
+[CreateAssetMenu(fileName = "new StateController", menuName = "GaramStudio/StateMachine/Player/StateController")]
 public class StateControllerSO : ScriptableObject
 {
     private PlayerManager _manager;

@@ -17,7 +17,7 @@ public class PlayerManager : Character
         if (mainCamera == null)
             mainCamera = Camera.main!.gameObject;
         AnimatorController = GetComponent<AnimatorController>();
-        Inventory?.RegisterEvent();
+        Inventory.RegisterEvent();
     }
     private void Start()
     {
@@ -40,13 +40,13 @@ public class PlayerManager : Character
     private void OnDisable()
     {
         StateController.OnExit();
-        Inventory?.UnRegisterEvent();
+        Inventory.UnRegisterEvent();
     }
 
     private void OnDrawGizmosSelected()
     {
-        Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-        Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
+        var transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+        var transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
 
         Gizmos.color = Prop.Grounded ? transparentGreen : transparentRed;
         var position = transform.position;

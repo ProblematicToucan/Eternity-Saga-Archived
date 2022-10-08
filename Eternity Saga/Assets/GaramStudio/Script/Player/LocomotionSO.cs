@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GarammStudio/Player/Locomotion", fileName = "New Locomotion")]
+[CreateAssetMenu(menuName = "GaramStudio/Player/Locomotion", fileName = "New Locomotion")]
 public class LocomotionSO : ScriptableObject
 {
     // player

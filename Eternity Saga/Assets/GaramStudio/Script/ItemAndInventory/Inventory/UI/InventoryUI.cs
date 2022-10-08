@@ -9,7 +9,7 @@ public class InventoryUI : MonoBehaviour, IRecyclerviewDelegate
     [SerializeField] private EventSO[] onDisableEvents; // Array event to be triggered when the inventory is disabled.
     private void OnEnable()
     {
-        for (int i = 0; i < onEnableEvents.Length; i++)
+        for (var i = 0; i < onEnableEvents.Length; i++)
         {
             onEnableEvents[i]?.Raise();
         }
@@ -19,7 +19,7 @@ public class InventoryUI : MonoBehaviour, IRecyclerviewDelegate
 
     private void OnDisable()
     {
-        for (int i = 0; i < onDisableEvents.Length; i++)
+        for (var i = 0; i < onDisableEvents.Length; i++)
         {
             onDisableEvents[i]?.Raise();
         }
@@ -37,23 +37,23 @@ public class InventoryUI : MonoBehaviour, IRecyclerviewDelegate
         Recyclerview.ReloadData();
     }
 
-    public int GetNumberOfCells(Recyclerview _recyclerview)
+    public int GetNumberOfCells(Recyclerview recyclerview)
     {
         return inventorySO.inventorySlots.Count;
     }
 
-    public float GetCellViewSize(Recyclerview _recyclerview, int _dataIndex)
+    public float GetCellViewSize(Recyclerview recyclerview, int dataIndex)
     {
         return 200;
     }
 
-    public RecyclerCellView GetCellView(Recyclerview _recyclerview, int _dataIndex, int _cellIndex)
+    public RecyclerCellView GetCellView(Recyclerview recyclerview, int dataIndex, int cellIndex)
     {
         var cellView = Recyclerview.GetCellView(RecyclerCellViewPrefab) as ItemSlotUI;
-        cellView.name = _dataIndex.ToString();
+        cellView!.name = dataIndex.ToString();
         cellView.SetData(
-            inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[_dataIndex].ItemID),
-            inventorySO.inventorySlots[_dataIndex].Amount
+            inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[dataIndex].ItemId),
+            inventorySO.inventorySlots[dataIndex].Amount
         );
         return cellView;
     }

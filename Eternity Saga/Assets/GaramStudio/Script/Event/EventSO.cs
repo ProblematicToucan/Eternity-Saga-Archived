@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Event", menuName = "GarammStudio/Event", order = 52)]
+[CreateAssetMenu(fileName = "New Event", menuName = "GaramStudio/Event", order = 52)]
 public class EventSO : ScriptableObject
 {
     private List<Event> events = new List<Event>();

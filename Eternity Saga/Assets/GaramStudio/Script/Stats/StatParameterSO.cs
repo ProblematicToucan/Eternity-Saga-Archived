@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "new StatParameter", menuName = "GarammStudio/Character/StatParameter")]
+[CreateAssetMenu(fileName = "new StatParameter", menuName = "GaramStudio/Character/StatParameter")]
 public class StatParameterSO : ScriptableObject
 {
     public float baseValue;

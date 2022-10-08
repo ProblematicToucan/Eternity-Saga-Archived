@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Equipment Item", menuName = "GarammStudio/Items Inventory/Item/Equipment Item")]
+[CreateAssetMenu(fileName = "new Equipment Item", menuName = "GaramStudio/Items Inventory/Item/Equipment Item")]
 public class EquippableItemSO : ItemSO
 {
     [field: SerializeField] public EquippableItemType equipType { get; private set; }

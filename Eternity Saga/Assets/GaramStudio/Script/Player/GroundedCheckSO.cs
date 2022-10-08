@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new PlayerGroundedCheck", menuName = "GarammStudio/Player/GroundedCheck")]
+[CreateAssetMenu(fileName = "new PlayerGroundedCheck", menuName = "GaramStudio/Player/GroundedCheck")]
 public class GroundedCheckSO : ScriptableObject
 {
     private PlayerManager _manager;

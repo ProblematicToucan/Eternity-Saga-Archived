@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "new Inventory Database", menuName = "GarammStudio/Items Inventory/Inventory Database")]
+[CreateAssetMenu(fileName = "new Inventory Database", menuName = "GaramStudio/Items Inventory/Inventory Database")]
 public class ItemDatabaseSO : ScriptableObject
 {
     [SerializeField] private ItemSO[] items;

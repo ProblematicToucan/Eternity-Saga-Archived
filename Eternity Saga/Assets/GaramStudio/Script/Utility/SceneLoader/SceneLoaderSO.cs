@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Scene Loader", menuName = "GarammStudio/Utility/Scene Loader")]
+[CreateAssetMenu(fileName = "Scene Loader", menuName = "GaramStudio/Utility/Scene Loader")]
 public class SceneLoaderSO : ScriptableObject
 {
     [field: SerializeField] public GameObject LoadingBarPrefab { get; private set; }

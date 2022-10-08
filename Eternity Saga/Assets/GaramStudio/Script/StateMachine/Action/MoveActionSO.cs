@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "GarammStudio/StateMachine/Player/Action/Move", fileName = "New MoveAction")]
+[CreateAssetMenu(menuName = "GaramStudio/StateMachine/Player/Action/Move", fileName = "New MoveAction")]
 public class MoveActionSO : ActionSO
 {
     private Vector2 _movement;

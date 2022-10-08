@@ -971,6 +971,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2056180955}
     m_Modifications:
+    - target: {fileID: 526007066597747394, guid: 4f6cf7bab151e0647aa3050e6535e144, type: 3}
+      propertyPath: inventorySo
+      value: 
+      objectReference: {fileID: 11400000, guid: 665be15a0bffed14b9c339c2e4884502, type: 2}
     - target: {fileID: 4213422339798834141, guid: 4f6cf7bab151e0647aa3050e6535e144, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
