@@ -25,6 +25,6 @@ MonoBehaviour:
     Value: 0
     Min: 30
     Max: 35
-  ItemDescription: The Time from Avabel realm.
+  ItemDescription: The Tome from Avabel realm.
   MaximumStacks: 1
   <equipType>k__BackingField: 0

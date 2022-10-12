@@ -21,6 +21,6 @@ MonoBehaviour:
     Value: 0
     Min: 5
     Max: 15
-  ItemDescription: 
+  ItemDescription: The Sword from Avabel realm.
   MaximumStacks: 1
   <equipType>k__BackingField: 0

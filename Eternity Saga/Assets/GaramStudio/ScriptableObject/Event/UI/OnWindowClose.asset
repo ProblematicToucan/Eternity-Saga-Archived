@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81d7d029d2ea1464cab40d6f45b20567, type: 3}
-  m_Name: OnInventoryWindowClose
+  m_Name: OnWindowClose
   m_EditorClassIdentifier: 

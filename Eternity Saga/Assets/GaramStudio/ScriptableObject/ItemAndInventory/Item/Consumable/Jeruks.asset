@@ -17,5 +17,64 @@ MonoBehaviour:
   ItemName: Jeruks
   ItemIcon: {fileID: 21300000, guid: 24b82dfd86d1e1e4cb3f343a1f0a5ce2, type: 3}
   Buffs: []
-  ItemDescription: Buah Jeruks
+  ItemDescription: 'Buah Jeruks tapi kok kaya bintang ya???
+
+    Lorem ipsum dolor
+    sit amet, consectetur adipiscing elit. Morbi sed ex vel mauris faucibus congue.
+    Vivamus suscipit nunc ut turpis auctor ornare. Maecenas venenatis viverra egestas.
+    Cras non egestas eros. Praesent tempor a neque sed pulvinar. Etiam molestie velit
+    dui, non scelerisque augue lobortis nec. Aliquam urna massa, porta et sem a,
+    consectetur suscipit magna. Morbi sed feugiat quam. Orci varius natoque penatibus
+    et magnis dis parturient montes, nascetur ridiculus mus. Nunc a ultrices odio,
+    at luctus dui. Aenean feugiat, nunc vel posuere euismod, felis elit tincidunt
+    justo, eu porttitor tellus mauris vel felis. Mauris quis dignissim neque. Proin
+    justo odio, mollis eget urna finibus, efficitur imperdiet nunc. Maecenas vitae
+    ligula interdum, convallis dui eu, ultricies magna.
+
+    
+
+    Maecenas dignissim
+    justo libero, vitae ultrices enim rutrum at. Proin tempus purus nunc, vitae scelerisque
+    purus commodo sit amet. Nunc vel bibendum ex. Morbi eleifend pretium quam, a
+    vehicula mi ultrices et. Phasellus sagittis ipsum ac convallis ultrices. Nulla
+    et tincidunt est. Phasellus id semper massa, ut vulputate odio. Duis eu magna
+    eros. Vestibulum id ipsum eu lorem tincidunt cursus. Fusce consequat porttitor
+    consequat. Praesent porta mi id scelerisque auctor. Maecenas euismod tellus sit
+    amet felis eleifend, eget ultricies mauris gravida. Suspendisse feugiat diam
+    imperdiet, pulvinar justo eget, tincidunt purus. Suspendisse a sagittis libero.
+
+    
+
+    Donec
+    elit orci, egestas vitae purus at, pulvinar ullamcorper nisl. Curabitur ut massa
+    sed lorem auctor lacinia. Nam elit orci, pretium ac nunc et, suscipit elementum
+    metus. Nunc et viverra massa, quis tincidunt lacus. Nunc efficitur lectus ut
+    nisl rhoncus, ac facilisis odio faucibus. Cras bibendum augue arcu, id bibendum
+    ex gravida id. Sed tristique purus et justo rutrum, sed bibendum mi tempor. Vivamus
+    lorem purus, placerat vel maximus in, tincidunt at libero. Proin consectetur
+    nec justo eu vehicula. Integer et nisi sit amet nulla sodales laoreet id eget
+    sem. Mauris vehicula diam in consequat ullamcorper.
+
+    
+
+    Morbi justo
+    tellus, vehicula nec dapibus eget, tincidunt at mi. Quisque vel placerat purus.
+    Nullam non magna nisl. Duis nec ipsum malesuada, mattis elit vitae, luctus justo.
+    Donec interdum est non arcu vulputate, nec aliquam nisl bibendum. Aliquam luctus
+    condimentum velit, et efficitur tortor pulvinar at. Nam urna sem, blandit et
+    dictum maximus, tristique sit amet magna. Nam varius leo lacus, vel elementum
+    mauris efficitur et. Nullam quis rutrum dui. Vivamus tincidunt hendrerit quam,
+    eget maximus augue dictum et. Quisque in maximus ligula.
+
+    
+
+    Sed et
+    lorem sit amet sapien aliquet accumsan eget at ligula. Mauris eu augue felis.
+    Etiam aliquam vitae ex sed condimentum. Maecenas luctus, sem vel placerat mollis,
+    neque nisi maximus lorem, id luctus purus lectus ut ante. Quisque id quam a odio
+    convallis finibus id in lectus. Integer ex felis, ultrices id maximus mattis,
+    iaculis vel nibh. Nulla ante nibh, tincidunt quis lacinia id, tristique ut dui.
+    Nunc faucibus, sem id tincidunt mattis, ex velit malesuada massa, non vestibulum
+    nulla sapien ut lacus. Vivamus aliquam est eget velit tempor cursus. Aliquam
+    dui dui, auctor semper odio ac, feugiat auctor arcu.'
   MaximumStacks: 1

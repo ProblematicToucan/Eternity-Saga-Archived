@@ -1,60 +1,44 @@
 using UnityEngine;
 
-public class InventoryUI : MonoBehaviour, IRecyclerviewDelegate
+public abstract class InventoryUI : MonoBehaviour, IRecyclerviewDelegate
 {
     [field: SerializeField] public Recyclerview Recyclerview { get; private set; }
     [field: SerializeField] public RecyclerCellView RecyclerCellViewPrefab { get; private set; }
-    [SerializeField] private InventorySO inventorySO; // Inventory ScriptableObject that hold data to show.
+    [Header("Events")]
     [SerializeField] private EventSO[] onEnableEvents; // Array event to be triggered when the inventory is enabled.
     [SerializeField] private EventSO[] onDisableEvents; // Array event to be triggered when the inventory is disabled.
-    private void OnEnable()
+
+    public virtual void OnEnable()
     {
+        CellViewSelected(null);
         for (var i = 0; i < onEnableEvents.Length; i++)
         {
-            onEnableEvents[i]?.Raise();
+            if (onEnableEvents[i] != null)
+                onEnableEvents[i].Raise();
         }
-        inventorySO.OnInventoryChanged += RefreshDisplay;
-        RefreshDisplay();
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         for (var i = 0; i < onDisableEvents.Length; i++)
         {
-            onDisableEvents[i]?.Raise();
+            onDisableEvents[i].Raise();
         }
-        inventorySO.OnInventoryChanged -= RefreshDisplay;
     }
 
-    private void Start()
+    public virtual void Start()
     {
         Recyclerview.Delegate = this;
         Recyclerview.ReloadData();
     }
 
-    public void RefreshDisplay()
-    {
-        Recyclerview.ReloadData();
-    }
+    public abstract void RefreshDisplay();
 
-    public int GetNumberOfCells(Recyclerview recyclerview)
-    {
-        return inventorySO.inventorySlots.Count;
-    }
+    public abstract int GetNumberOfCells(Recyclerview recyclerview);
 
-    public float GetCellViewSize(Recyclerview recyclerview, int dataIndex)
-    {
-        return 200;
-    }
+    public abstract float GetCellViewSize(Recyclerview recyclerview, int dataIndex);
 
-    public RecyclerCellView GetCellView(Recyclerview recyclerview, int dataIndex, int cellIndex)
-    {
-        var cellView = Recyclerview.GetCellView(RecyclerCellViewPrefab) as ItemSlotUI;
-        cellView!.name = dataIndex.ToString();
-        cellView.SetData(
-            inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[dataIndex].ItemId),
-            inventorySO.inventorySlots[dataIndex].Amount
-        );
-        return cellView;
-    }
+    public abstract RecyclerCellView GetCellView(Recyclerview recyclerview, int dataIndex, int cellIndex);
+
+    public abstract void CellViewSelected(RecyclerCellView cellView);
 }

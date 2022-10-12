@@ -1,4 +1,4 @@
-using GarammStudio.Script.Input;
+using GaramStudio.Script.Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;

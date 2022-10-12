@@ -25,6 +25,6 @@ MonoBehaviour:
     Value: 0
     Min: 5
     Max: 10
-  ItemDescription: 
+  ItemDescription: The Shield from Avabel realm.
   MaximumStacks: 1
   <equipType>k__BackingField: 0

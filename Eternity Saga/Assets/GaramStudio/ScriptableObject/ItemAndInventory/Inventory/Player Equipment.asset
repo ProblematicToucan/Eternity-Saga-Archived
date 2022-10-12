@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d7d029d2ea1464cab40d6f45b20567, type: 3}
-  m_Name: OnInventoryWindowOpen
+  m_Script: {fileID: 11500000, guid: 55ca666b083d8774cb536941bc38801f, type: 3}
+  m_Name: Player Equipment
   m_EditorClassIdentifier: 
+  <ItemDatabase>k__BackingField: {fileID: 11400000, guid: d63662f56025e2948b2288f007f349f6, type: 2}
+  <Capacity>k__BackingField: 4
+  inventorySlots: []

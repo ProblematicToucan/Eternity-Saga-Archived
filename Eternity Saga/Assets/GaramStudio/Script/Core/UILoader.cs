@@ -29,6 +29,6 @@ public class UILoader : MonoBehaviour
     private void OnGUI()
     {
         if (!showFPS) return;
-        GUI.Label(new Rect(100, 100, 100, 100), $"{(int)(1.0f / Time.smoothDeltaTime)}");
+        GUI.Label(new Rect(100, 10, 100, 100), $"{(int)(1.0f / Time.smoothDeltaTime)}");
     }
 }

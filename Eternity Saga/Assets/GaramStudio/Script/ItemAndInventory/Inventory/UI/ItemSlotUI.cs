@@ -14,19 +14,21 @@ public delegate void SelectedDelegate(RecyclerCellView cellView);
 /// </summary>
 public class ItemSlotUI : RecyclerCellView
 {
-    public ItemSO Item;
+    public ItemSO Item { get; private set; }
     [field: SerializeField] public Image ItemImage { get; private set; }
     [field: SerializeField] public Image BackgroundImage { get; private set; }
     [field: SerializeField] public TextMeshProUGUI ItemCount { get; private set; }
     [field: SerializeField] public TextMeshProUGUI ItemName { get; private set; }
     [field: SerializeField] public Color selectedColor { get; private set; }
     [field: SerializeField] public Color UnSelectedColor { get; private set; }
+
     /// <summary>
-    /// Public reference index from some data.
+    /// Index properti publik dari data pada cell view ini.
     /// </summary>
     public int DataIndex { get; private set; }
+
     /// <summary>
-    /// The handler to call when this cell's button traps a click event.
+    /// Handler yang dipanggil ketika cell view ini di trigger oleh event klik.
     /// </summary>
     public SelectedDelegate selected;
 
@@ -35,12 +37,18 @@ public class ItemSlotUI : RecyclerCellView
         BackgroundImage.color = (selected ? selectedColor : UnSelectedColor);
     }
 
-    public async void SetData(ItemSO _item, int _amount)
+    public async void SetData(int dataIndex, ItemSO _item, int _amount)
     {
+        DataIndex = dataIndex;
         Item = _item;
         ItemImage.sprite = _item.ItemIcon;
         ItemCount.text = _amount.ToString();
         ItemName.text = _item.ItemName;
         await Task.Yield();
+    }
+
+    public void OnSelected()
+    {
+        selected?.Invoke(this);
     }
 }
