@@ -69,6 +69,24 @@ public class InventorySO : ScriptableObject
     }
 
     /// <summary>
+    /// Remove item from inventory.
+    /// </summary>
+    /// <param name="inventorySlot">Slot that want to remove.</param>
+    /// <param name="amount">Item amount that want to remove.</param>
+    public void RemoveItem(InventorySlot inventorySlot, int amount)
+    {
+        var index = inventorySlots.IndexOf(inventorySlot); // Find index of the inventory slot.
+        inventorySlots[index].Amount -= amount; // Reduce amount of the item.
+        // If amount <= 0, we delete the slot.
+        if (inventorySlots[index].Amount <= 0)
+        {
+            inventorySlots.Remove(inventorySlot);
+            SortSlot();
+        }
+        OnInventoryChanged?.Invoke();
+    }
+
+    /// <summary>
     /// Subscribe OnTouch event to AddItem.
     /// </summary>
     public void RegisterEvent()

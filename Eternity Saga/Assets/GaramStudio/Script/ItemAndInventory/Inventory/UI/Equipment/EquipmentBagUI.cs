@@ -5,12 +5,17 @@ using UnityEngine.UI;
 
 public class EquipmentBagUI : InventoryUI
 {
-    [SerializeField] protected InventorySO inventorySO;
-    [Header("Item Details Property")]
-    [SerializeField] private GameObject ItemDetailsPanel;
-    [SerializeField] private Image ItemImage;
-    [SerializeField] private TextMeshProUGUI ItemName;
-    [SerializeField] private TextMeshProUGUI ItemDescription;
+    [Header("Equipment Bag Property")]
+    [SerializeField] private InventorySO inventorySO;
+    [SerializeField] private GameObject itemDetailsPanel;
+    [SerializeField] private Image itemImage;
+    [SerializeField] private TextMeshProUGUI itemName;
+    [SerializeField] private TextMeshProUGUI itemDescription;
+    [SerializeField] private Button lockButton;
+    [SerializeField] private Button equipButton;
+    [SerializeField] private Button enhanceButton;
+    [SerializeField] private Button removeButton;
+    private InventorySlot selectedInventorySlot;
     private List<InventorySlot> GetEquipmentOnInventorySlots
     {
         get
@@ -55,12 +60,14 @@ public class EquipmentBagUI : InventoryUI
     public override void OnDisable()
     {
         base.OnDisable();
+        selectedInventorySlot = null;
         inventorySO.OnInventoryChanged -= RefreshDisplay;
     }
 
     public override void RefreshDisplay()
     {
         Recyclerview.ReloadData();
+        RefreshDetails();
     }
 
     public override int GetNumberOfCells(Recyclerview recyclerview)
@@ -82,7 +89,8 @@ public class EquipmentBagUI : InventoryUI
         cellView.selected = CellViewSelected;
         cellView.SetData(
             dataIndex,
-            itemSO,
+            itemSO.ItemIcon,
+            itemSO.ItemName,
             slots[dataIndex].Amount
         );
         return cellView;
@@ -92,21 +100,45 @@ public class EquipmentBagUI : InventoryUI
     {
         if (cellView == null)
         {
-            ItemDetailsPanel.SetActive(false);
+            itemDetailsPanel.SetActive(false);
+            selectedInventorySlot = null;
         }
         else
         {
-            ItemDetailsPanel.SetActive(false);
+            itemDetailsPanel.SetActive(false);
             var selectedDataIndex = (cellView as ItemSlotUI).DataIndex;
-            var slots = GetEquipmentOnInventorySlots[selectedDataIndex];
-            var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(slots.ItemId);
-            string[] itemNameText = { $"{slots.Item.Name}",
+            selectedInventorySlot = GetEquipmentOnInventorySlots[selectedDataIndex];
+            var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(selectedInventorySlot.ItemId);
+            string[] itemNameText = { $"{selectedInventorySlot.Item.Name}",
                 $"({itemSO.ItemType})",
-                $"({slots.Amount})"};
-            ItemDetailsPanel.SetActive(true);
-            ItemImage.sprite = itemSO.ItemIcon;
-            ItemName.text = string.Join(" ", itemNameText);
-            ItemDescription.text = itemSO.ItemDescription;
+                $"({selectedInventorySlot.Amount})"};
+            itemDetailsPanel.SetActive(true);
+            equipButton.interactable = itemSO.ItemType != ItemType.Misc;
+            enhanceButton.interactable = itemSO.ItemType == ItemType.Equipment;
+            itemImage.sprite = itemSO.ItemIcon;
+            itemName.text = string.Join(" ", itemNameText);
+            itemDescription.text = itemSO.ItemDescription;
         }
+    }
+
+    private void RefreshDetails()
+    {
+        itemDetailsPanel.SetActive(false);
+        selectedInventorySlot = inventorySO.inventorySlots.Contains(selectedInventorySlot) ?
+            selectedInventorySlot : null;
+        if (selectedInventorySlot != null)
+        {
+            var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(selectedInventorySlot.ItemId);
+            string[] itemNameText = { $"{selectedInventorySlot.Item.Name}",
+                $"({itemSO.ItemType})",
+                $"({selectedInventorySlot.Amount})"};
+            itemDetailsPanel.SetActive(true);
+            itemName.text = string.Join(" ", itemNameText);
+        }
+    }
+
+    public void RemoveItem()
+    {
+        inventorySO.RemoveItem(selectedInventorySlot, 1);
     }
 }

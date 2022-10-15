@@ -14,7 +14,6 @@ public delegate void SelectedDelegate(RecyclerCellView cellView);
 /// </summary>
 public class ItemSlotUI : RecyclerCellView
 {
-    public ItemSO Item { get; private set; }
     [field: SerializeField] public Image ItemImage { get; private set; }
     [field: SerializeField] public Image BackgroundImage { get; private set; }
     [field: SerializeField] public TextMeshProUGUI ItemCount { get; private set; }
@@ -37,13 +36,12 @@ public class ItemSlotUI : RecyclerCellView
         BackgroundImage.color = (selected ? selectedColor : UnSelectedColor);
     }
 
-    public async void SetData(int dataIndex, ItemSO _item, int _amount)
+    public async void SetData(int dataIndex, Sprite itemImage, string itemName, int _amount)
     {
         DataIndex = dataIndex;
-        Item = _item;
-        ItemImage.sprite = _item.ItemIcon;
+        ItemImage.sprite = itemImage;
         ItemCount.text = _amount.ToString();
-        ItemName.text = _item.ItemName;
+        ItemName.text = itemName;
         await Task.Yield();
     }
 
