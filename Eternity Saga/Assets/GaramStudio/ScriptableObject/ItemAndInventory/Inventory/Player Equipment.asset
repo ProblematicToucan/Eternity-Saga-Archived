@@ -13,5 +13,65 @@ MonoBehaviour:
   m_Name: Player Equipment
   m_EditorClassIdentifier: 
   <ItemDatabase>k__BackingField: {fileID: 11400000, guid: d63662f56025e2948b2288f007f349f6, type: 2}
-  <Capacity>k__BackingField: 4
-  inventorySlots: []
+  <Capacity>k__BackingField: 8
+  inventorySlots:
+  - ItemId: 1872921182
+    Item:
+      Id: 1872921182
+      Name: Mevius Tome
+      Buffs:
+      - Attribute: 1
+        Value: 11
+        Min: 10
+        Max: 20
+      - Attribute: 3
+        Value: 34
+        Min: 30
+        Max: 35
+    Amount: 1
+  - ItemId: -1565546420
+    Item:
+      Id: -1565546420
+      Name: Mevius Sword
+      Buffs:
+      - Attribute: 0
+        Value: 10
+        Min: 5
+        Max: 15
+    Amount: 1
+  - ItemId: -1
+    Item:
+      Id: -1
+      Name: 
+      Buffs: []
+    Amount: 0
+  - ItemId: -1
+    Item:
+      Id: -1
+      Name: 
+      Buffs: []
+    Amount: 0
+  - ItemId: -1
+    Item:
+      Id: -1
+      Name: 
+      Buffs: []
+    Amount: 0
+  - ItemId: -1
+    Item:
+      Id: -1
+      Name: 
+      Buffs: []
+    Amount: 0
+  - ItemId: -1
+    Item:
+      Id: -1
+      Name: 
+      Buffs: []
+    Amount: 0
+  - ItemId: -1
+    Item:
+      Id: -1
+      Name: 
+      Buffs: []
+    Amount: 0

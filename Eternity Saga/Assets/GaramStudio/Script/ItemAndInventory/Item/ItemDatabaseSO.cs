@@ -6,7 +6,7 @@ public class ItemDatabaseSO : ScriptableObject
     [SerializeField] private ItemSO[] items;
 
     /// <summary>
-    /// Get ItemSO with item id from databse.
+    /// Get ItemSO by item id from databse.
     /// </summary>
     /// <param name="_itemId">id of the item.</param>
     /// <returns>ItemSO.</returns>
@@ -22,6 +22,11 @@ public class ItemDatabaseSO : ScriptableObject
         return null;
     }
 
+    /// <summary>
+    /// Get item id by ItemSO from database.
+    /// </summary>
+    /// <param name="_itemSO"></param>
+    /// <returns></returns>
     public int GetIdReferenceByItemSO(ItemSO _itemSO)
     {
         for (int i = 0; i < items.Length; i++)

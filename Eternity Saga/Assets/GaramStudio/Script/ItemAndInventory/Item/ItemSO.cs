@@ -35,6 +35,13 @@ public class Item
     public string Name;
     public ItemBuff[] Buffs;
 
+    public Item()
+    {
+        Id = -1;
+        Name = null;
+        Buffs = null;
+    }
+
     /// <summary>
     /// Constructor to create item object with referencing to ItemSO.
     /// </summary>

@@ -29,7 +29,7 @@ public class InventorySO : ScriptableObject
         }
     }
 #endif
-
+    
     /// <summary>
     /// Add item to the inventory functionality.
     /// </summary>
@@ -146,6 +146,15 @@ public class InventorySO : ScriptableObject
         inventorySlots.Sort(slotNameComparer); // sort list by name.
         inventorySlots.Sort(slotTypeComparer); // sort list by type.
     }
+
+    /// <summary>
+    /// Add empty slot with defined empty item.
+    /// </summary>
+    [ContextMenu("Add Empty Slot")]
+    public void AddEmptySlot()
+    {
+        inventorySlots.Add(new InventorySlot());
+    }
 }
 
 /// <summary>
@@ -154,6 +163,16 @@ public class InventorySO : ScriptableObject
 [Serializable]
 public class InventorySlot
 {
+    /// <summary>
+    /// The delegate to call if the data's selection state
+    /// has changed. This will update any views that are hooked
+    /// to the data so that they show the proper selection state UI.
+    /// </summary>
+    public SelectedChangedDelegate selectedChanged;
+    /// <summary>
+    /// The selection state
+    /// </summary>
+    private bool _selected;
     public int ItemId;
     public Item Item;
     public int Amount;
@@ -178,6 +197,21 @@ public class InventorySlot
         ItemId = itemSo.Id;
         Item = itemSo;
         Amount = amount;
+    }
+
+    public bool Selected
+    {
+        get { return _selected; }
+        set
+        {
+            // if the value has changed
+            if (_selected != value)
+            {
+                // update the state and call the selection handler if it exists
+                _selected = value;
+                selectedChanged?.Invoke(_selected);
+            }
+        }
     }
 }
 
@@ -226,10 +260,10 @@ internal class SlotTypeComparer : IComparer<InventorySlot>
     /// <summary>
     /// Comparer to sort list by item type.
     /// </summary>
-    /// <param name="databaseSo">Database.</param>
-    public SlotTypeComparer(ItemDatabaseSO databaseSo)
+    /// <param name="databaseSO">Database.</param>
+    public SlotTypeComparer(ItemDatabaseSO databaseSO)
     {
-        _databaseSo = databaseSo;
+        _databaseSo = databaseSO;
     }
     public int Compare(InventorySlot x, InventorySlot y)
     {
@@ -252,10 +286,10 @@ internal class SlotNameComparer : IComparer<InventorySlot>
     /// <summary>
     /// Comparer to sort list by item name.
     /// </summary>
-    /// <param name="databaseSo">Database.</param>
-    public SlotNameComparer(ItemDatabaseSO databaseSo)
+    /// <param name="databaseSO">Database.</param>
+    public SlotNameComparer(ItemDatabaseSO databaseSO)
     {
-        _databaseSo = databaseSo;
+        _databaseSo = databaseSO;
     }
     public int Compare(InventorySlot x, InventorySlot y)
     {
@@ -263,3 +297,9 @@ internal class SlotNameComparer : IComparer<InventorySlot>
             _databaseSo.GetItemSOReferenceById(x!.ItemId).ItemName, _databaseSo.GetItemSOReferenceById(y!.ItemId).ItemName, StringComparison.Ordinal);
     }
 }
+
+/// <summary>
+/// This delegate handles any changes to the selection state of the data
+/// </summary>
+/// <param name="val">The state of the selection</param>
+public delegate void SelectedChangedDelegate(bool val);

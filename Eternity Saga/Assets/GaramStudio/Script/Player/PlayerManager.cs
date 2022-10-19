@@ -11,6 +11,7 @@ public class PlayerManager : Character
     public AnimatorController AnimatorController { get; private set; }
     [field: SerializeField] public GroundedCheckSO GroundedCheck { get; private set; }
     [field: SerializeField, Expandable] public InventorySO Inventory { get; private set; }
+    [field: SerializeField, Expandable] public InventorySO PlayerEquipment { get; private set; }
 
     private void Awake()
     {

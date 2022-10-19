@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,28 +7,47 @@ using UnityEngine.UI;
 public class EquipmentBagUI : InventoryUI
 {
     [Header("Equipment Bag Property")]
-    [SerializeField] private InventorySO inventorySO;
+    [SerializeField] private InventorySO bagInventorySO;
+    [SerializeField] private EquipmentUI equipmentUI;
     [SerializeField] private GameObject itemDetailsPanel;
     [SerializeField] private Image itemImage;
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemDescription;
-    [SerializeField] private Button lockButton;
     [SerializeField] private Button equipButton;
+    [SerializeField] private Button unequipButton;
     [SerializeField] private Button enhanceButton;
-    [SerializeField] private Button removeButton;
+    private bool _recyclerviewSetActive;
     private InventorySlot selectedInventorySlot;
+    public bool RecyclerviewSetActive
+    {
+        get { return _recyclerviewSetActive; }
+        set
+        {
+            _recyclerviewSetActive = value;
+
+            // if the data existed previously, loop through
+            // and remove the selection change handlers before
+            // clearing out the data.
+            for (var i = 0; i < bagInventorySO.inventorySlots.Count; i++)
+            {
+                bagInventorySO.inventorySlots[i].selectedChanged = null;
+            }
+
+            RefreshDisplay();
+        }
+    }
     private List<InventorySlot> GetEquipmentOnInventorySlots
     {
         get
         {
-            var slotNameComparer = new SlotNameComparer(inventorySO.ItemDatabase);
+            var slotNameComparer = new SlotNameComparer(bagInventorySO.ItemDatabase);
             List<InventorySlot> equipmentSlots = new List<InventorySlot>();
-            for (var i = 0; i < inventorySO.inventorySlots.Count; i++)
+            for (var i = 0; i < bagInventorySO.inventorySlots.Count; i++)
             {
-                var itemType = inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[i].ItemId).ItemType;
+                var itemType = bagInventorySO.ItemDatabase.GetItemSOReferenceById(bagInventorySO.inventorySlots[i].ItemId).ItemType;
                 if (itemType == ItemType.Equipment)
                 {
-                    equipmentSlots.Add(inventorySO.inventorySlots[i]);
+                    equipmentSlots.Add(bagInventorySO.inventorySlots[i]);
                     equipmentSlots.Sort(slotNameComparer);
                 }
             }
@@ -39,9 +59,9 @@ public class EquipmentBagUI : InventoryUI
         get
         {
             var count = 0;
-            for (var i = 0; i < inventorySO.inventorySlots.Count; i++)
+            for (var i = 0; i < bagInventorySO.inventorySlots.Count; i++)
             {
-                if (inventorySO.ItemDatabase.GetItemSOReferenceById(inventorySO.inventorySlots[i].ItemId).ItemType == ItemType.Equipment)
+                if (bagInventorySO.ItemDatabase.GetItemSOReferenceById(bagInventorySO.inventorySlots[i].ItemId).ItemType == ItemType.Equipment)
                 {
                     count++;
                 }
@@ -53,26 +73,29 @@ public class EquipmentBagUI : InventoryUI
     public override void OnEnable()
     {
         base.OnEnable();
-        RefreshDisplay();
-        inventorySO.OnInventoryChanged += RefreshDisplay;
+
+        bagInventorySO.OnInventoryChanged += RefreshDisplay;
     }
 
     public override void OnDisable()
     {
         base.OnDisable();
-        selectedInventorySlot = null;
-        inventorySO.OnInventoryChanged -= RefreshDisplay;
+
+        bagInventorySO.OnInventoryChanged -= RefreshDisplay;
     }
 
     public override void RefreshDisplay()
     {
+        // tell the scrollers to reload.
         Recyclerview.ReloadData();
+
+        // tell details panel to reload.
         RefreshDetails();
     }
 
     public override int GetNumberOfCells(Recyclerview recyclerview)
     {
-        return GetEquipmentCount;
+        return RecyclerviewSetActive ? GetEquipmentCount : 0;
     }
 
     public override float GetCellViewSize(Recyclerview recyclerview, int dataIndex)
@@ -84,14 +107,18 @@ public class EquipmentBagUI : InventoryUI
     {
         var cellView = Recyclerview.GetCellView(RecyclerCellViewPrefab) as ItemSlotUI;
         var slots = GetEquipmentOnInventorySlots;
-        var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(slots[dataIndex].ItemId);
+        var itemSO = bagInventorySO.ItemDatabase.GetItemSOReferenceById(slots[dataIndex].ItemId);
         cellView.name = dataIndex.ToString();
+
+        // set the selected callback to the CellViewSelected function of this controller. 
+        // this will be fired when the cell's button is clicked.
         cellView.selected = CellViewSelected;
+
+        // set the data for the cell.
         cellView.SetData(
             dataIndex,
-            itemSO.ItemIcon,
-            itemSO.ItemName,
-            slots[dataIndex].Amount
+            slots[dataIndex],
+            itemSO.ItemIcon
         );
         return cellView;
     }
@@ -102,19 +129,29 @@ public class EquipmentBagUI : InventoryUI
         {
             itemDetailsPanel.SetActive(false);
             selectedInventorySlot = null;
+            for (int i = 0; i < bagInventorySO.inventorySlots.Count; i++)
+            {
+                bagInventorySO.inventorySlots[i].Selected = false;
+            }
         }
         else
         {
             itemDetailsPanel.SetActive(false);
             var selectedDataIndex = (cellView as ItemSlotUI).DataIndex;
             selectedInventorySlot = GetEquipmentOnInventorySlots[selectedDataIndex];
-            var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(selectedInventorySlot.ItemId);
+            for (int i = 0; i < GetEquipmentOnInventorySlots.Count; i++)
+                GetEquipmentOnInventorySlots[i].Selected = (selectedDataIndex == i);
+
+            var itemSO = bagInventorySO.ItemDatabase.GetItemSOReferenceById(selectedInventorySlot.ItemId) as EquippableItemSO;
             string[] itemNameText = { $"{selectedInventorySlot.Item.Name}",
                 $"({itemSO.ItemType})",
                 $"({selectedInventorySlot.Amount})"};
-            itemDetailsPanel.SetActive(true);
+
+            unequipButton.interactable = false;
             equipButton.interactable = itemSO.ItemType != ItemType.Misc;
             enhanceButton.interactable = itemSO.ItemType == ItemType.Equipment;
+            itemDetailsPanel.SetActive(true);
+
             itemImage.sprite = itemSO.ItemIcon;
             itemName.text = string.Join(" ", itemNameText);
             itemDescription.text = itemSO.ItemDescription;
@@ -124,21 +161,32 @@ public class EquipmentBagUI : InventoryUI
     private void RefreshDetails()
     {
         itemDetailsPanel.SetActive(false);
-        selectedInventorySlot = inventorySO.inventorySlots.Contains(selectedInventorySlot) ?
+        selectedInventorySlot = bagInventorySO.inventorySlots.Contains(selectedInventorySlot) ?
             selectedInventorySlot : null;
         if (selectedInventorySlot != null)
         {
-            var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(selectedInventorySlot.ItemId);
+            var itemSO = bagInventorySO.ItemDatabase.GetItemSOReferenceById(selectedInventorySlot.ItemId);
             string[] itemNameText = { $"{selectedInventorySlot.Item.Name}",
                 $"({itemSO.ItemType})",
                 $"({selectedInventorySlot.Amount})"};
-            itemDetailsPanel.SetActive(true);
             itemName.text = string.Join(" ", itemNameText);
+            itemDetailsPanel.SetActive(true);
         }
     }
 
-    public void RemoveItem()
+    public void EquipItem()
     {
-        inventorySO.RemoveItem(selectedInventorySlot, 1);
+        var slots = bagInventorySO.inventorySlots;
+        equipmentUI.EquipItem(selectedInventorySlot);
+        slots.Remove(selectedInventorySlot);
+        CellViewSelected(null);
+    }
+
+    public void UnequipItem(InventorySlot inventorySlot)
+    {
+        var slots= bagInventorySO.inventorySlots;
+        slots.Add(inventorySlot);
+        bagInventorySO.SortSlot();
+        RefreshDisplay();
     }
 }

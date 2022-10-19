@@ -19,20 +19,23 @@ public class BagUI : InventoryUI
     public override void OnEnable()
     {
         base.OnEnable();
-        RefreshDisplay();
+
         inventorySO.OnInventoryChanged += RefreshDisplay;
     }
 
     public override void OnDisable()
     {
         base.OnDisable();
-        selectedInventorySlot = null;
+
         inventorySO.OnInventoryChanged -= RefreshDisplay;
     }
 
     public override void RefreshDisplay()
     {
+        // tell the scrollers to reload.
         Recyclerview.ReloadData();
+
+        // tell details panel to reload.
         RefreshDetails();
     }
 
@@ -52,12 +55,16 @@ public class BagUI : InventoryUI
         var slots = inventorySO.inventorySlots;
         var itemSO = inventorySO.ItemDatabase.GetItemSOReferenceById(slots[dataIndex].ItemId);
         cellView.name = dataIndex.ToString();
+
+        // set the selected callback to the CellViewSelected function of this controller. 
+        // this will be fired when the cell's button is clicked.
         cellView.selected = CellViewSelected;
+
+        // set the data for the cell.
         cellView.SetData(
             dataIndex,
-            itemSO.ItemIcon,
-            itemSO.ItemName,
-            slots[dataIndex].Amount
+            slots[dataIndex],
+            itemSO.ItemIcon
         );
         return cellView;
     }
@@ -78,9 +85,11 @@ public class BagUI : InventoryUI
             string[] itemNameText = { $"{selectedInventorySlot.Item.Name}",
                 $"({itemSO.ItemType})",
                 $"({selectedInventorySlot.Amount})"};
+
             equipButton.interactable = itemSO.ItemType != ItemType.Misc;
             enhanceButton.interactable = itemSO.ItemType == ItemType.Equipment;
             itemDetailsPanel.SetActive(true);
+
             itemImage.sprite = itemSO.ItemIcon;
             itemName.text = string.Join(" ", itemNameText);
             itemDescription.text = itemSO.ItemDescription;
