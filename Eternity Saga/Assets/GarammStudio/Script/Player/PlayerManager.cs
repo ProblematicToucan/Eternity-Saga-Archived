@@ -20,6 +20,7 @@ public class PlayerManager : Character
         AnimatorController = GetComponent<AnimatorController>();
         Inventory.RegisterEvent();
     }
+
     private void Start()
     {
         GroundedCheck.OnStart(this);
@@ -38,7 +39,7 @@ public class PlayerManager : Character
         StateController.OnFixedUpdate();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         StateController.OnExit();
         Inventory.UnRegisterEvent();

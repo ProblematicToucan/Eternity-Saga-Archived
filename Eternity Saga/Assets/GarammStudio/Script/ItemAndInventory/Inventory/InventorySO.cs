@@ -29,7 +29,7 @@ public class InventorySO : ScriptableObject
         }
     }
 #endif
-    
+
     /// <summary>
     /// Add item to the inventory functionality.
     /// </summary>

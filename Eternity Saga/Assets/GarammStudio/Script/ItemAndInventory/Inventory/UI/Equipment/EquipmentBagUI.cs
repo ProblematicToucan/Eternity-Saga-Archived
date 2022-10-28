@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -184,7 +183,7 @@ public class EquipmentBagUI : InventoryUI
 
     public void UnequipItem(InventorySlot inventorySlot)
     {
-        var slots= bagInventorySO.inventorySlots;
+        var slots = bagInventorySO.inventorySlots;
         slots.Add(inventorySlot);
         bagInventorySO.SortSlot();
         RefreshDisplay();
