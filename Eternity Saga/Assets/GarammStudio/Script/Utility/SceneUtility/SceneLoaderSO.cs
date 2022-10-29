@@ -10,6 +10,7 @@ public class SceneLoaderSO : ScriptableObject
     [field: SerializeField] public GameObject LoadingScreenPrefab { get; private set; }
     [field: SerializeField] public GameObject CrossfadePanel { get; private set; }
     [field: SerializeField, Description("Time to animate crossfade in second"), Range(1, 5)] public float AnimateTime { get; private set; }
+    [field: SerializeField] public AnimationCurve AnimateCurve { get; private set; } = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     public async void LoadScene(string sceneName)
     {
@@ -27,30 +28,25 @@ public class SceneLoaderSO : ScriptableObject
 
     public async Task Crossfade(CrossfadeType type, float duration)
     {
-        var panel = Instantiate(CrossfadePanel, Vector3.up, Quaternion.identity).GetComponent<CanvasGroup>();
-        float t = 0f;
-        if (type == CrossfadeType.fadein)
+        var canvasGroup = Instantiate(CrossfadePanel, Vector3.up, Quaternion.identity).GetComponent<CanvasGroup>();
+        var startTime = Time.time;
+        var endTime = Time.time + duration;
+        
+        if (type == CrossfadeType.fadein) canvasGroup.alpha = AnimateCurve.Evaluate(0);
+        else canvasGroup.alpha = AnimateCurve.Evaluate(1);
+
+        while (Time.time <= endTime)
         {
-            panel.alpha = 0;
-            while (t < duration)
-            {
-                panel.alpha = t / duration;
-                t += Time.deltaTime;
-                await Task.Yield();
-            }
-            await Task.Delay(500);
+            float elapsedTime = Time.time - startTime;
+            var percentage = 1 / (duration / elapsedTime);
+
+            if (type == CrossfadeType.fadein) canvasGroup.alpha = AnimateCurve.Evaluate(percentage);
+            else canvasGroup.alpha = AnimateCurve.Evaluate(1 - percentage);
+            await Task.Yield();
         }
-        else
-        {
-            panel.alpha = 1;
-            await Task.Delay(1000);
-            while (t < duration)
-            {
-                panel.alpha = 1 - t / duration;
-                t += Time.deltaTime;
-                await Task.Yield();
-            }
-        }
+
+        if (type == CrossfadeType.fadein) canvasGroup.alpha = AnimateCurve.Evaluate(1);
+        else canvasGroup.alpha = AnimateCurve.Evaluate(0);
     }
 }
 

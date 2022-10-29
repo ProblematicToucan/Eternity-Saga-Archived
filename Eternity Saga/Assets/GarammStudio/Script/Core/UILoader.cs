@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class UILoader : MonoBehaviour
 {
     [SerializeField] private bool loadUiScene = true;
-    [SerializeField] private bool showFPS = false;
+    //[SerializeField] private bool showFPS = false;
     [field: SerializeField] public SceneLoaderSO SceneLoaderSO { get; private set; }
 
     void Awake()
@@ -24,7 +24,7 @@ public class UILoader : MonoBehaviour
 
     private async void Crossfade()
     {
-        await SceneLoaderSO.Crossfade(CrossfadeType.fadeout, 1);
+        await SceneLoaderSO.Crossfade(CrossfadeType.fadeout, SceneLoaderSO.AnimateTime);
     }
 
     private void Start()
@@ -36,9 +36,9 @@ public class UILoader : MonoBehaviour
 #endif
     }
 
-    private void OnGUI()
-    {
-        if (!showFPS) return;
-        GUI.Label(new Rect(100, 10, 100, 100), $"{(int)(1.0f / Time.smoothDeltaTime)}");
-    }
+    //private void OnGUI()
+    //{
+    //    if (!showFPS) return;
+    //    GUI.Label(new Rect(100, 10, 100, 100), $"{(int)(1.0f / Time.smoothDeltaTime)}");
+    //}
 }
