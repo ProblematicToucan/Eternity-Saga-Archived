@@ -3,9 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class UILoader : MonoBehaviour
 {
+    [SerializeField] private bool loadUiScene = true;
     [SerializeField] private bool showFPS = false;
+    [field: SerializeField] public SceneLoaderSO SceneLoaderSO { get; private set; }
+
     void Awake()
     {
+        Crossfade();
+        if (!loadUiScene) return;
         var sceneUI = SceneManager.GetSceneByName("UI");
         if (sceneUI.isLoaded == false)
         {
@@ -15,6 +20,11 @@ public class UILoader : MonoBehaviour
         {
             SceneManager.UnloadSceneAsync("UI");
         }
+    }
+
+    private async void Crossfade()
+    {
+        await SceneLoaderSO.Crossfade(CrossfadeType.fadeout, 1);
     }
 
     private void Start()

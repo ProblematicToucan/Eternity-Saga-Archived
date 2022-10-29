@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19da404aa3dfe0b4dbfbc6faeb846580, type: 3}
   m_Name: Scene Loader
   m_EditorClassIdentifier: 
-  <LoadingBarPrefab>k__BackingField: {fileID: 8352882457848967905, guid: 0971cfffb81a12c4a9bc1c902c23cea5, type: 3}
+  <LoadingScreenPrefab>k__BackingField: {fileID: 8352882457848967905, guid: 0971cfffb81a12c4a9bc1c902c23cea5, type: 3}
+  <CrossfadePanel>k__BackingField: {fileID: 4020484832471409664, guid: b2daeffb8ed288447a66bef54d76b2c5, type: 3}
+  <AnimateTime>k__BackingField: 1
