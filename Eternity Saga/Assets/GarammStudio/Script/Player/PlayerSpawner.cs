@@ -8,7 +8,10 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Start()
     {
-        Instantiate(gameManager.PlayerPrefab);
+        gameManager.PlayerPrefab.LoadAssetAsync().Completed += (playerPrefab) =>
+        {
+            gameManager.PlayerPrefab.InstantiateAsync();
+        };
         Destroy(gameObject);
     }
 

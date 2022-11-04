@@ -1,9 +1,10 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 
 public class UILoader : MonoBehaviour
 {
     [SerializeField] private bool loadUiScene = true;
+    [SerializeField] private AssetReference sceneRef;
     //[SerializeField] private bool showFPS = false;
     [field: SerializeField] public SceneLoaderSO SceneLoaderSO { get; private set; }
 
@@ -11,15 +12,7 @@ public class UILoader : MonoBehaviour
     {
         Crossfade();
         if (!loadUiScene) return;
-        var sceneUI = SceneManager.GetSceneByName("UI");
-        if (sceneUI.isLoaded == false)
-        {
-            SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-        }
-        else
-        {
-            SceneManager.UnloadSceneAsync("UI");
-        }
+        SceneLoaderSO.LoadSceneAdditive(sceneRef);
     }
 
     private async void Crossfade()

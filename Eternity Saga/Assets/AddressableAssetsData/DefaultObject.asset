@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9fc7b6031c2c5f4ea189a6b62adc726, type: 3}
-  m_Name: Game Manager Data
+  m_Script: {fileID: 11500000, guid: 3a189bb168d8d90478a09ea08c2f3d72, type: 3}
+  m_Name: DefaultObject
   m_EditorClassIdentifier: 
-  <PlayerPrefab>k__BackingField:
-    m_AssetGUID: bcd0598f4341a144da89919bb0de6ec8
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  m_AddressableAssetSettingsGuid: 22fd1d5cc2e9d1946b26e7f69b6391ac

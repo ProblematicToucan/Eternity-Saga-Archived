@@ -1335,7 +1335,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadUiScene: 1
-  showFPS: 0
+  sceneRef:
+    m_AssetGUID: 5dbfdbbf5a30bb04daec83e6e2e1460c
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   <SceneLoaderSO>k__BackingField: {fileID: 11400000, guid: a24d2e5dc3528b44db728d5d578ba5dc, type: 2}
 --- !u!1 &984956688
 GameObject:

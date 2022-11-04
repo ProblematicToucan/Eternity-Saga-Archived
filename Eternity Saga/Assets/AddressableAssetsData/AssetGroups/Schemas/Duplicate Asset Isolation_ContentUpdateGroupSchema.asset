@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9fc7b6031c2c5f4ea189a6b62adc726, type: 3}
-  m_Name: Game Manager Data
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Duplicate Asset Isolation_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  <PlayerPrefab>k__BackingField:
-    m_AssetGUID: bcd0598f4341a144da89919bb0de6ec8
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  m_Group: {fileID: 11400000, guid: 3a9e31516a35947418332e1ccc3ee9c2, type: 2}
+  m_StaticContent: 1
