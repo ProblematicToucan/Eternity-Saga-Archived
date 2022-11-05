@@ -8,16 +8,17 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Start()
     {
+        var position = new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z);
         gameManager.PlayerPrefab.LoadAssetAsync().Completed += (playerPrefab) =>
         {
-            gameManager.PlayerPrefab.InstantiateAsync();
+            gameManager.PlayerPrefab.InstantiateAsync(position,Quaternion.identity);
+            Destroy(gameObject);
         };
-        Destroy(gameObject);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = color;
-        Gizmos.DrawWireMesh(mesh);
+        Gizmos.DrawWireMesh(mesh,transform.position);
     }
 }

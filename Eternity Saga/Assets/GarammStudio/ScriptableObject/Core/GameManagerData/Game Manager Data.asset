@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Game Manager Data
   m_EditorClassIdentifier: 
   <PlayerPrefab>k__BackingField:
-    m_AssetGUID: bcd0598f4341a144da89919bb0de6ec8
+    m_AssetGUID: c9027d1054cbed44c889cfbf2324a164
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/WelcomeScreen.unity
-    guid: 55c1b3b7cf4b24944a0bc6e10c916fb2
+    path: Assets/Scenes/TrainingArea.unity
+    guid: cc61d4c64bb712c47ad6193fe1e2b864
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: cf43f9f2befd8c64c93074cf2739ba31, type: 2}
