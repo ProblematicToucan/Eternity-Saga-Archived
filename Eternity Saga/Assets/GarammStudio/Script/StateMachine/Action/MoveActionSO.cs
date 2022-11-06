@@ -7,7 +7,7 @@ public class MoveActionSO : ActionSO
     internal override void OnEnterAction(PlayerManager manager)
     {
         base.OnEnterAction(manager);
-        _manager.InputReader.moveEvent += OnMove;
+        _manager.InputReader.MoveEvent += OnMove;
     }
 
     private void OnMove(Vector2 arg0)
@@ -17,7 +17,7 @@ public class MoveActionSO : ActionSO
 
     internal override void OnExitAction()
     {
-        _manager.InputReader.moveEvent -= OnMove;
+        _manager.InputReader.MoveEvent -= OnMove;
     }
 
     internal override void OnFixedUpdateAction()

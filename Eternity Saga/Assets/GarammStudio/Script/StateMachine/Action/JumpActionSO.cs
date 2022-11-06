@@ -9,8 +9,8 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
     internal override void OnEnterAction(PlayerManager manager)
     {
         base.OnEnterAction(manager);
-        _manager.InputReader.jumpEvent += OnJump;
-        _manager.InputReader.jumpCanceledEvent += OnJump;
+        _manager.InputReader.JumpEvent += OnJump;
+        _manager.InputReader.JumpCanceledEvent += OnJump;
         // reset our timeouts on start    
         _jumpTimeoutDelta = _manager.prop.JumpTimeout;
         _fallTimeoutDelta = _manager.prop.FallTimeout;
@@ -24,8 +24,8 @@ public class JumpActionSO : ActionSO // Jump & gravity action.
 
     internal override void OnExitAction()
     {
-        _manager.InputReader.jumpEvent -= OnJump;
-        _manager.InputReader.jumpCanceledEvent -= OnJump;
+        _manager.InputReader.JumpEvent -= OnJump;
+        _manager.InputReader.JumpCanceledEvent -= OnJump;
     }
 
     internal override void OnFixedUpdateAction()

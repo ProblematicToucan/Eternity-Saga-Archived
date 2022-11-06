@@ -16,7 +16,7 @@ public class AnimatorController : MonoBehaviour
     public int AnimIDIsInteracting { get; private set; }
     // RM IDs
     public int AnimIDRM { get; private set; }
-    void Start()
+    void Awake()
     {
         Anim = GetComponentInChildren<Animator>();
         AnimIDRM = Animator.StringToHash("RM");

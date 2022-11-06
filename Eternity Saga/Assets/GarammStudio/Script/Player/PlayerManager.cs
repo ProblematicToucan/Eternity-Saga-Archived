@@ -15,7 +15,6 @@ public class PlayerManager : Character
     public AnimatorController AnimatorController { get; private set; }
     [SerializeField] private GroundedCheckSO groundedCheck;
 
-
     private void Awake()
     {
         if (mainCamera == null)

@@ -1,15 +1,15 @@
-using UnityEngine;
 using GarammStudio.Script.Input;
-using UnityEngine.InputSystem;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "new InputReader", menuName = "GarammStudio/Input/InputReader")]
 public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, GlobalControls.INonGameplayActions
 {
-    public event UnityAction<Vector2> moveEvent = delegate { };
-    public event UnityAction jumpEvent = delegate { };
-    public event UnityAction jumpCanceledEvent = delegate { };
-    public event UnityAction dodgeEvent = delegate { };
+    public event UnityAction<Vector2> MoveEvent = delegate { };
+    public event UnityAction JumpEvent = delegate { };
+    public event UnityAction JumpCanceledEvent = delegate { };
+    public event UnityAction DodgeEvent = delegate { };
     private GlobalControls controls;
 
     private void OnEnable()
@@ -47,13 +47,13 @@ public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, Gl
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started) jumpEvent.Invoke();
-        if (context.phase == InputActionPhase.Canceled) jumpCanceledEvent.Invoke();
+        if (context.phase == InputActionPhase.Started) JumpEvent.Invoke();
+        if (context.phase == InputActionPhase.Canceled) JumpCanceledEvent.Invoke();
     }
 
     public void OnMovement(InputAction.CallbackContext context)
     {
-        moveEvent.Invoke(context.ReadValue<Vector2>());
+        MoveEvent.Invoke(context.ReadValue<Vector2>());
     }
 
     public void OnScreenPosition(InputAction.CallbackContext context)
@@ -63,6 +63,6 @@ public class InputReader : ScriptableObject, GlobalControls.IGameplayActions, Gl
 
     public void OnDodge(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started) dodgeEvent.Invoke();
+        if (context.phase == InputActionPhase.Started) DodgeEvent.Invoke();
     }
 }

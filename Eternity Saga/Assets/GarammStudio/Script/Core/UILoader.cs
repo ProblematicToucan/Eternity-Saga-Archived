@@ -5,14 +5,7 @@ public class UILoader : MonoBehaviour
 {
     void Awake()
     {
-        var sceneUI = SceneManager.GetSceneByName("UI");
-        if (sceneUI.isLoaded == false)
-        {
-            SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-        }
-        else
-        {
-            SceneManager.UnloadSceneAsync("UI");
-        }
+        Application.targetFrameRate = 300;
+        SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
     }
 }

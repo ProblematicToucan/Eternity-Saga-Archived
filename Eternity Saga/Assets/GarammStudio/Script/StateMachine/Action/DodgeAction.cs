@@ -6,7 +6,7 @@ public class DodgeAction : ActionSO
     internal override void OnEnterAction(PlayerManager manager)
     {
         base.OnEnterAction(manager);
-        _manager.InputReader.dodgeEvent += Dodge;
+        _manager.InputReader.DodgeEvent += Dodge;
     }
     internal override void OnExitAction()
     {
