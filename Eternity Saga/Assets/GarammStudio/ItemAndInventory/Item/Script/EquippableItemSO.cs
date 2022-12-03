@@ -6,7 +6,7 @@ public class EquippableItemSO : ItemSO
     [field: SerializeField] public EquippableItemType equipType { get; private set; }
 
     #region Flat
-    [field: SerializeField, Header("Flat Value")] public int strengthBonus { get; private set; }
+    [field: SerializeField, Header("Flat Value")] public int StrengthBonus { get; private set; }
     [field: SerializeField] public int intelligenceBonus { get; private set; }
     [field: SerializeField] public int vitBonus { get; private set; }
     [field: SerializeField] public int menBonus { get; private set; }
@@ -27,8 +27,8 @@ public class EquippableItemSO : ItemSO
     public void Equip(CharacterStat characterStat)
     {
         // FLat
-        if (strengthBonus != 0)
-            characterStat.strength.AddModifier(new StatModifier(strengthBonus, StatModType.Flat, this));
+        if (StrengthBonus != 0)
+            characterStat.strength.AddModifier(new StatModifier(StrengthBonus, StatModType.Flat, this));
         if (intelligenceBonus != 0)
             characterStat.intelligence.AddModifier(new StatModifier(intelligenceBonus, StatModType.Flat, this));
         if (vitBonus != 0)

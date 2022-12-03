@@ -40,6 +40,7 @@ public class GameEvent : IGameEventListener
     {
         @event.UnregisterListener(this);
     }
+
     public void OnEventRaised()
     {
         response?.Invoke();

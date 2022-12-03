@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#region GameEventSO
 [CreateAssetMenu(fileName = "New Game Event", menuName = "GarammStudio/Game Event", order = 52)]
 public class GameEventSO : ScriptableObject
 {
@@ -14,6 +15,7 @@ public class GameEventSO : ScriptableObject
         }
     }
 
+    #region ListenerRegistration
     public void RegisterListener(IGameEventListener listener)
     {
         if (!eventListeners.Contains(listener))
@@ -29,4 +31,6 @@ public class GameEventSO : ScriptableObject
             eventListeners.Remove(listener);
         }
     }
+    #endregion
 }
+#endregion
