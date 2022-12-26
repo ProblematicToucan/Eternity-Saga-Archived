@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7055314976272158522}
   - component: {fileID: 7055314976272158520}
   - component: {fileID: 7055314976272158523}
+  - component: {fileID: 2836854530751837692}
   m_Layer: 5
   m_Name: AbilitySlotFollower
   m_TagString: Untagged
@@ -76,3 +77,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2836854530751837692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7055314976272158501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7b32b64266c654797f6994cdb4fe42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

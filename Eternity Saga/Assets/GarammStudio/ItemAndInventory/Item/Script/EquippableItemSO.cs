@@ -3,14 +3,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new Equipment Item", menuName = "GarammStudio/Item/Equipment Item")]
 public class EquippableItemSO : ItemSO
 {
-    [field: SerializeField] public EquippableItemType equipType { get; private set; }
+    [field: SerializeField] public ItemType ItemType { get; private set; }
+    [field: SerializeField] public EquippableItemType EquipType { get; private set; }
 
     #region Flat
     [field: SerializeField, Header("Flat Value")] public int StrengthBonus { get; private set; }
-    [field: SerializeField] public int intelligenceBonus { get; private set; }
-    [field: SerializeField] public int vitBonus { get; private set; }
-    [field: SerializeField] public int menBonus { get; private set; }
-    [field: SerializeField] public int dexterityBonus { get; private set; }
+    [field: SerializeField] public int IntelligenceBonus { get; private set; }
+    [field: SerializeField] public int VitBonus { get; private set; }
+    [field: SerializeField] public int MenBonus { get; private set; }
+    [field: SerializeField] public int DexterityBonus { get; private set; }
     #endregion
 
     #region Percent
@@ -24,21 +25,27 @@ public class EquippableItemSO : ItemSO
     [field: SerializeField] public float speedBonusPercent { get; private set; }
     #endregion
 
+    private void Awake()
+    {
+        ItemType = ItemType.Equipment;
+    }
+
     public void Equip(CharacterStat characterStat)
     {
-        // FLat
+        #region FlatModifier
         if (StrengthBonus != 0)
             characterStat.strength.AddModifier(new StatModifier(StrengthBonus, StatModType.Flat, this));
-        if (intelligenceBonus != 0)
-            characterStat.intelligence.AddModifier(new StatModifier(intelligenceBonus, StatModType.Flat, this));
-        if (vitBonus != 0)
-            characterStat.vit.AddModifier(new StatModifier(vitBonus, StatModType.Flat, this));
-        if (menBonus != 0)
-            characterStat.men.AddModifier(new StatModifier(menBonus, StatModType.Flat, this));
-        if (dexterityBonus != 0)
-            characterStat.dexterity.AddModifier(new StatModifier(dexterityBonus, StatModType.Flat, this));
+        if (IntelligenceBonus != 0)
+            characterStat.intelligence.AddModifier(new StatModifier(IntelligenceBonus, StatModType.Flat, this));
+        if (VitBonus != 0)
+            characterStat.vit.AddModifier(new StatModifier(VitBonus, StatModType.Flat, this));
+        if (MenBonus != 0)
+            characterStat.men.AddModifier(new StatModifier(MenBonus, StatModType.Flat, this));
+        if (DexterityBonus != 0)
+            characterStat.dexterity.AddModifier(new StatModifier(DexterityBonus, StatModType.Flat, this));
+        #endregion
 
-        // Percent Add
+        #region PercentModifier
         if (atkBonusPercent != 0)
             characterStat.Atk.AddModifier(new StatModifier(atkBonusPercent, StatModType.PercentAdd, this));
         if (matkBonusPercent != 0)
@@ -55,6 +62,7 @@ public class EquippableItemSO : ItemSO
             characterStat.Crit.AddModifier(new StatModifier(critkBonusPercent, StatModType.PercentAdd, this));
         if (speedBonusPercent != 0)
             characterStat.Speed.AddModifier(new StatModifier(speedBonusPercent, StatModType.PercentAdd, this));
+        #endregion
     }
 
     public void Unequip(CharacterStat characterStat)

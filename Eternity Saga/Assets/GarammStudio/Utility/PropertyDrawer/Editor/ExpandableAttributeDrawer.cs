@@ -93,7 +93,7 @@ public class ExpandableAttributeDrawer : PropertyDrawer
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        Rect fieldRect = new Rect(position);
+        Rect fieldRect = new(position);
         fieldRect.height = EditorGUIUtility.singleLineHeight;
 
         EditorGUI.PropertyField(fieldRect, property, label, true);

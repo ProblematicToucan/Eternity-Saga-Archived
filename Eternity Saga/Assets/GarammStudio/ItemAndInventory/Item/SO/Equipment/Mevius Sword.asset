@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df69dee184c46424ea847c333c28d48f, type: 3}
   m_Name: Mevius Sword
   m_EditorClassIdentifier: 
-  itemName: Mevius Sword
-  itemIcon: {fileID: 0}
-  itemDescription: Sword from Avabel realm
-  <equipType>k__BackingField: 0
-  <strengthBonus>k__BackingField: 0
-  <intelligenceBonus>k__BackingField: 0
-  <vitBonus>k__BackingField: 0
-  <menBonus>k__BackingField: 0
-  <dexterityBonus>k__BackingField: 0
+  <ItemName>k__BackingField: Mevius Sword
+  <ItemIcon>k__BackingField: {fileID: 21300000, guid: f35c66a15d7e42e4a90c4bd66fd27396, type: 3}
+  <ItemDescription>k__BackingField: Sword from Avabel realm
+  <IsStackable>k__BackingField: 1
+  <ItemType>k__BackingField: 1
+  <EquipType>k__BackingField: 0
+  <StrengthBonus>k__BackingField: 0
+  <IntelligenceBonus>k__BackingField: 0
+  <VitBonus>k__BackingField: 0
+  <MenBonus>k__BackingField: 0
+  <DexterityBonus>k__BackingField: 0
   <atkBonusPercent>k__BackingField: 0
   <matkBonusPercent>k__BackingField: 0
   <healthBonusPercent>k__BackingField: 0

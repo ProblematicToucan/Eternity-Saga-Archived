@@ -2,14 +2,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class MouseFollower : MonoBehaviour
+public class UIMouseFollower : MonoBehaviour
 {
-    [SerializeField] private Canvas myCanvas;
-    [SerializeField] private GameObject inventorySlotFollower;
-    [SerializeField] private GameObject abilitySlotFollower;
+    [SerializeField] private UIInventorySlotFollower inventorySlotFollower;
+    [SerializeField] private UIAbilitySlotFollower abilitySlotFollower;
+    private Canvas myCanvas;
 
     private void Start()
     {
+        myCanvas = gameObject.GetComponentInParent<Canvas>();
+
         UISlot.BeginDragAction += OnBeginDragAction;
         UISlot.DragAction += OnDragAction;
         UISlot.EndDragAction += OnEndDragAction;
@@ -27,18 +29,19 @@ public class MouseFollower : MonoBehaviour
         var slot = obj.GetType();
         if (slot == typeof(UIInventorySlot))
         {
-            inventorySlotFollower.SetActive(true);
+            inventorySlotFollower.SetDisplay(obj as UIInventorySlot);
+            inventorySlotFollower.gameObject.SetActive(true);
         }
         else
         {
-            abilitySlotFollower.SetActive(true);
+            abilitySlotFollower.gameObject.SetActive(true);
         }
     }
 
     private void OnEndDragAction()
     {
-        inventorySlotFollower.SetActive(false);
-        abilitySlotFollower.SetActive(false);
+        inventorySlotFollower.gameObject.SetActive(false);
+        abilitySlotFollower.gameObject.SetActive(false);
     }
 
     public void OnBeginDragInventorySlot(UISlot uiSlot)

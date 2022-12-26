@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 8
-    m_Right: 8
-    m_Top: 2
+    m_Left: 10
+    m_Right: 10
+    m_Top: 4
     m_Bottom: 1
   m_ChildAlignment: 4
   m_Spacing: 0
@@ -277,6 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31f4b8cd1396644f8528edddb99a517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIcon: {fileID: 525169842875796730}
+  itemCount: {fileID: 4205338135200254353}
 --- !u!1 &3913265829427991887
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +448,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 13.4
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
